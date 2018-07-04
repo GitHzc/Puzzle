@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Puzzle</string>
+    <string name="puzzle_uppercase">PUZZLE</string>
+    <string name="maker">makerR</string>
+    <string name="username">用户名</string>
+    <string name="password">密码</string>
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="game_start">开始游戏</string>
+    <string name="rank">排行榜</string>
+    <string name="personal">个人中心</string>
+    <string name="choose_style">选择样式</string>
+    <string name="choose_picture">选择图片</string>
+    <string name="start_puzzle">开始拼图</string>
+    <string name="choose_from_album">从相册中选择</string>
+    <string name="initial_difficulty">3 x 3</string>
+    <string name="second_difficulty">4 x 4</string>
+    <string name="third_difficulty">5 x 5</string>
+    <string name="fourth_difficulty">6 x 6</string>
+    <string name="positive">确定</string>
+    <string name="negative">取消</string>
+    <string name="dialog_title">选择难度</string>
+    <string name="clip_picture">裁剪图片</string>
+    <string name="complete">完成</string>
+</resources>
