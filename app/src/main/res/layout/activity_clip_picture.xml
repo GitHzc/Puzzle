@@ -17,7 +17,8 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/back"
-            android:layout_marginStart="5dp"/>
+            android:layout_marginStart="5dp"
+            android:layout_centerVertical="true"/>
         <TextView
             android:layout_toRightOf="@id/activity_clip_picture_back"
             android:layout_width="wrap_content"
