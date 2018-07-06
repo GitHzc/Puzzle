@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,6 +31,18 @@ public class ChooseBorderView extends View {
         super(context, attrs);
         this.setFocusable(true);
         this.setFocusableInTouchMode(true);
+    }
+
+    public float getBorderLength() {
+        return borderLength;
+    }
+
+    public float getTopLeftX() {
+        return four_corner_coordinate_positions[0][0];
+    }
+
+    public float getTopLeftY() {
+        return four_corner_coordinate_positions[0][1];
     }
 
     @Override

@@ -17,5 +17,4 @@ import java.util.List;
 public class Utility {
     static public int REQUEST_PERMISSION_CODE = 1;
     static public int REQUEST_CHOOSE_PICTURE_CODE = 2;
-
 }

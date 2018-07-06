@@ -11,4 +11,10 @@
     <color name="bottomShadow">#00E6BF</color>
     <color name="backgroundWhite">#EEFFFC</color>
     <color name="greenLight">#00E6BF</color>
+    <color name="themeBlueLight">#76a6e3</color>
+    <color name="themeBlue">#3383e6</color>
+    <color name="dishGrey">#e0e0e0</color>
+    <color name="personGrey">#e6e6e6</color>
+    <color name="personGreyDark">#dcdcdc</color>
+    <color name="transparent">#00000000</color>
 </resources>

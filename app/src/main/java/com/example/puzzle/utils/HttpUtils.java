@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -24,7 +25,7 @@ public class HttpUtils {
         @FormUrlEncoded
         @POST("user")
         @Headers("Content-Type:application/x-www-form-urlencoded")
-        Observable<LoginBean> login(@Field("username")String username, @Field("passwd")String password, @Field("action")String action);
+        Observable<Response<LoginBean>> login(@Field("username")String username, @Field("passwd")String password, @Field("action")String action);
 
         @FormUrlEncoded
         @POST("user")

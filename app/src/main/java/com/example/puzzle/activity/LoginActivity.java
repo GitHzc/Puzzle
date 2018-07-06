@@ -9,6 +9,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +19,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.puzzle.PuzzleApplication;
 import com.example.puzzle.R;
 
 import java.util.ArrayList;
@@ -26,12 +28,16 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import com.example.puzzle.model.User;
 import com.example.puzzle.utils.HttpUtils;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import com.example.puzzle.model.LoginBean;
+
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import com.example.puzzle.utils.Utility;
 import com.example.puzzle.widget.KeyboardLayout;
@@ -88,8 +94,8 @@ public class LoginActivity extends AppCompatActivity {
     @OnClick({R.id.activity_login_login_button, R.id.activity_login_register_button, R.id.close_button})
     public void onButtonClick(View view) {
         Retrofit retrofit = HttpUtils.getRetrofit();
-        String username = mUsername.getText().toString();
-        String password = mPassword.getText().toString();
+        final String username = mUsername.getText().toString();
+        final String password = mPassword.getText().toString();
         if (username.equals("") || password.equals("")) {
             mErrorMessage.setText("用户名或密码不能为空");
             mLinearLayout.setVisibility(View.VISIBLE);
@@ -104,13 +110,16 @@ public class LoginActivity extends AppCompatActivity {
                 api.login(username, password, "login")
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Observer<LoginBean>() {
+                        .subscribe(new Observer<Response<LoginBean>>() {
                             @Override
                             public void onSubscribe(Disposable d) {}
 
                             @Override
-                            public void onNext(LoginBean loginBean) {
+                            public void onNext(Response<LoginBean> response) {
+                                LoginBean loginBean = response.body();
                                 if (loginBean.getError().equals("")) {
+                                    User user = new User(username, password, response.headers().get("Set-Cookie"));
+                                    PuzzleApplication.setmUser(user);
                                     Intent intent = MainPageActivity.getIntent(LoginActivity.this);
                                     startActivity(intent);
                                 } else {

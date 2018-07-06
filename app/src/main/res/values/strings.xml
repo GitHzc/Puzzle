@@ -22,4 +22,5 @@
     <string name="dialog_title">选择难度</string>
     <string name="clip_picture">裁剪图片</string>
     <string name="complete">完成</string>
+    <string name="default_time">00:00</string>
 </resources>

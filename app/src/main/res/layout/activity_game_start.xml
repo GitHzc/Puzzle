@@ -85,47 +85,67 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="10dp">
-                <ImageView
-                    android:id="@+id/activity_game_start_picture1"
-                    android:layout_width="145dp"
-                    android:layout_height="145dp"
-                    android:src="@drawable/puzzle1"
-                    android:scaleType="fitCenter"
-                    android:layout_marginEnd="10dp"/>
-                <ImageView
-                    android:id="@+id/activity_game_start_picture2"
-                    android:layout_width="145dp"
-                    android:layout_height="145dp"
-                    android:src="@drawable/puzzle2"
-                    android:scaleType="fitCenter"/>
+                android:layout_marginBottom="7dp">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp"
+                    android:layout_marginEnd="7dp">
+                    <ImageView
+                        android:id="@+id/activity_game_start_picture1"
+                        android:layout_width="140dp"
+                        android:layout_height="140dp"
+                        android:src="@drawable/puzzle1"
+                        android:scaleType="fitCenter" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp">
+                    <ImageView
+                        android:id="@+id/activity_game_start_picture2"
+                        android:layout_width="140dp"
+                        android:layout_height="140dp"
+                        android:src="@drawable/puzzle2"
+                        android:scaleType="fitCenter"/>
+                </LinearLayout>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
-                <ImageView
-                    android:id="@+id/activity_game_start_picture3"
-                    android:layout_width="145dp"
-                    android:layout_height="145dp"
-                    android:src="@drawable/puzzle3"
-                    android:scaleType="fitCenter"
-                    android:layout_marginEnd="10dp"/>
                 <LinearLayout
-                    android:id="@+id/activity_game_start_choose_from_album"
-                    android:layout_width="145dp"
-                    android:layout_height="145dp"
-                    android:orientation="vertical"
-                    android:background="@color/greenLight"
-                    android:gravity="center">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp"
+                    android:layout_marginEnd="7dp">
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/picture" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@android:color/white"
-                        android:text="@string/choose_from_album"/>
+                        android:id="@+id/activity_game_start_picture3"
+                        android:layout_width="140dp"
+                        android:layout_height="140dp"
+                        android:src="@drawable/puzzle3"
+                        android:scaleType="fitCenter" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp">
+                    <LinearLayout
+                        android:id="@+id/activity_game_start_choose_from_album"
+                        android:layout_width="140dp"
+                        android:layout_height="140dp"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:background="@color/greenLight">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/picture" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/white"
+                            android:text="@string/choose_from_album"/>
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
