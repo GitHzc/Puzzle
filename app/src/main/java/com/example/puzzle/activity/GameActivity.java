@@ -203,7 +203,7 @@ public class GameActivity extends BaseActivity {
             }
             st = 2;
         }
-        st = 1;
+        if(st == 0)st = 1;
     }
 
     @Override
