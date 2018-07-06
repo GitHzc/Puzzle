@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black"
+    android:background="#191D29"
     android:orientation="vertical"
     tools:context=".activity.History">
     <LinearLayout
@@ -18,7 +18,7 @@
             android:layout_height="30dp"
             android:scaleType="fitCenter"
             android:src="@drawable/back"
-            android:background="@android:color/black"
+            android:background="#191D29"
             android:padding="6dp"/>
     </LinearLayout>
     <LinearLayout
@@ -58,7 +58,7 @@
                 android:id="@+id/history_difficulty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:entries="@array/difficulty">
+                android:entries="@array/difficulty_2">
             </Spinner>
         </RelativeLayout>
         <ListView
