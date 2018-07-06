@@ -24,7 +24,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
-class User extends AppCompatActivity implements View.OnClickListener{
+public class User extends AppCompatActivity implements View.OnClickListener{
     private TextView user_rank;
     private TextView user_name;
     private ImageButton back_button;

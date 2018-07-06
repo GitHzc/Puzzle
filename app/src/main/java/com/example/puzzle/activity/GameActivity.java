@@ -8,6 +8,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.icu.text.AlphabeticIndex;
+import android.icu.text.SimpleDateFormat;
+import android.icu.util.TimeZone;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -44,10 +46,12 @@ import com.example.puzzle.event.PieceMoveSuccessEvent;
 import com.example.puzzle.event.TimeEvent;
 import com.example.puzzle.imagesplit.ImagePiece;
 import com.example.puzzle.imagesplit.ImageSplitter;
+import com.example.puzzle.model.SubmitScoreBean;
 import com.example.puzzle.utils.BitmapUtils;
 import com.example.puzzle.utils.DensityUtil;
 import com.example.puzzle.utils.GameTimer;
 import com.example.puzzle.utils.GlobalUtils;
+import com.example.puzzle.utils.HttpUtils;
 import com.example.puzzle.widget.Pausedialog;
 import com.example.puzzle.widget.Windialog;
 
@@ -58,6 +62,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.ref.WeakReference;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,7 +70,10 @@ import java.util.Stack;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Retrofit;
 
 
 public class GameActivity extends BaseActivity {
@@ -94,6 +102,7 @@ public class GameActivity extends BaseActivity {
     private StaticHandler timeHandler = new StaticHandler(GameActivity.this);
     private GameTimer gameTimer;
     private int time = 0;
+    private String startTime;
 
     private DishManager dm;
     private Bitmap mBitmap;
@@ -265,26 +274,7 @@ public class GameActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(GameSuccessEvent event) {
-
         gameTimer.stopTimer();
-//        AlphabeticIndex.Record eTemp = new AlphabeticIndex.Record();
-//
-//        eTemp.setType(PuzzleApplication.getLevel() + "");
-//        eTemp.setTime(timeText.getText().toString());
-//        eTemp.setNickname(PuzzleApplication.getmUser().getUsername());
-//
-//        eTemp.save(GameActivity.this, new SaveListener() {
-//            @Override
-//            public void onSuccess() {
-//                Log.i("main", "数据记录保存成功");
-//            }
-//
-//            @Override
-//            public void onFailure(int i, String s) {
-//                Log.e("main", "数据记录保存失败" + s);
-//            }
-//        });
-
         showSuccess();
 
     }
@@ -314,10 +304,8 @@ public class GameActivity extends BaseActivity {
         window.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         dialogwin.setCanceledOnTouchOutside(false);
         dialogwin.show();
-
+        submitScore();
     }
-
-
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(DishManagerInitFinishEvent event) {
@@ -326,6 +314,10 @@ public class GameActivity extends BaseActivity {
 
     private void initialization() {
         Log.d(TAG, "init begin");
+        Date now = new Date(System.currentTimeMillis());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
+        startTime = simpleDateFormat.format(now);
         layViewContainer.removeAllViews();
         pieceList.clear();
 
@@ -532,6 +524,21 @@ public class GameActivity extends BaseActivity {
 
     static public Intent getIntent(Context context) {
         return new Intent(context, GameActivity.class);
+    }
+
+    private void submitScore() {
+        Retrofit retrofit = HttpUtils.getRetrofit();
+        HttpUtils.Myapi api = retrofit.create(HttpUtils.Myapi.class);
+        api.submit(PuzzleApplication.getmUser().getCookie(), time, startTime, PuzzleApplication.getLevel())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Consumer<SubmitScoreBean>() {
+                    @Override
+                    public void accept(SubmitScoreBean submitScoreBean) throws Exception {
+                        if (submitScoreBean.getError().equals("")) {
+                            Log.d(TAG, "accept: " + "提交成功!");
+                        }
+                    }
+                });
     }
 }
 

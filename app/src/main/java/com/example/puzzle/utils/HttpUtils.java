@@ -5,6 +5,7 @@ import com.example.puzzle.model.HistoryBean;
 import com.example.puzzle.model.LoginBean;
 import com.example.puzzle.model.LogoutBean;
 import com.example.puzzle.model.RankBean;
+import com.example.puzzle.model.SubmitScoreBean;
 import com.example.puzzle.model.UserInfoBean;
 
 import java.util.concurrent.TimeUnit;
@@ -62,6 +63,11 @@ public class HttpUtils {
         @GET("user/info") //获取用户信息 rank username
         @Headers("Content-Type:application/x-www-form-urlencoded")
         Observable<UserInfoBean> getUserInfo(@Header("Cookie") String cookie);
+
+        @POST("record")
+        @FormUrlEncoded
+        @Headers("Content-Type:application/x-www-form-urlencoded")
+        Observable<SubmitScoreBean> submit(@Header("Cookie")String cookie, @Field("score")int score, @Field("time")String time, @Field("mode")int level);
     }
 
     public static Retrofit getRetrofit() {
