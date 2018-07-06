@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.puzzle.PuzzleApplication;
 import com.example.puzzle.R;
 import com.example.puzzle.model.LogoutBean;
 import com.example.puzzle.model.RankBean;
@@ -47,7 +48,7 @@ class User extends AppCompatActivity implements View.OnClickListener{
         //初始化用户信息：用户名 排名
         Retrofit retrofit = HttpUtils.getRetrofit();
         HttpUtils.Myapi api = retrofit.create(HttpUtils.Myapi.class);
-        api.getUserInfo()
+        api.getUserInfo(PuzzleApplication.getmUser().getCookie())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<UserInfoBean>() {
@@ -62,7 +63,7 @@ class User extends AppCompatActivity implements View.OnClickListener{
                             String username = contentBean.getUsername();
                             String rank = contentBean.getRank();
                             user_name.setText(username);
-                            user_rank.setText(rank);
+                            user_rank.setText("世界排名：" + rank);
                         }
                     }
 
@@ -99,8 +100,9 @@ class User extends AppCompatActivity implements View.OnClickListener{
                             @Override
                             public void onNext(LogoutBean logoutBean) {
                                 if (logoutBean.getError().equals("")) {
-                                    //跳转到登陆界面
+                                    //跳转到登陆界面并销毁当前页面
                                     Intent intent = new Intent(User.this, LoginActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(intent);
                                 }else return;
                             }

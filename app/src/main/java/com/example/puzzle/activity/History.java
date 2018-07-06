@@ -6,11 +6,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.puzzle.PuzzleApplication;
 import com.example.puzzle.R;
 import com.example.puzzle.model.HistoryBean;
 import com.example.puzzle.model.RankBean;
@@ -25,10 +28,11 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
-public class History extends AppCompatActivity {
+public class History extends AppCompatActivity implements View.OnClickListener {
     private Spinner difficulty;
     private ListView historyList;
     private List historyItems;
+    private ImageButton his_back_button;
     private HistoryAdapter historyAdapter;
 
     @Override
@@ -37,11 +41,13 @@ public class History extends AppCompatActivity {
         setContentView(R.layout.activity_history);
         difficulty = (Spinner) findViewById(R.id.history_difficulty);
         historyList = (ListView) findViewById(R.id.history_list);
+        his_back_button = (ImageButton) findViewById(R.id.history_back);
+        his_back_button.setOnClickListener(this);
         historyItems = new ArrayList<HistoryItem>();
 
         Retrofit retrofit = HttpUtils.getRetrofit();
         HttpUtils.Myapi api = retrofit.create(HttpUtils.Myapi.class);
-        api.getAllHistory()
+        api.getAllHistory(PuzzleApplication.getmUser().getCookie())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<HistoryBean>() {
@@ -52,6 +58,7 @@ public class History extends AppCompatActivity {
                     public void onNext(HistoryBean historyBean) {
                         List<HistoryBean.ContentBean> contentBeans = historyBean.getContent();
                         int index = 0;
+                        if (contentBeans == null) return;;
                         for (HistoryBean.ContentBean contentBean: contentBeans){
                             index ++;
                             String mode = contentBean.getMode() + "×" +  contentBean.getMode();
@@ -70,6 +77,86 @@ public class History extends AppCompatActivity {
                     public void onComplete() { }
                 });
 
+        //Spinner监听
+        difficulty.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id){
+                if (position == 0){
+                    Retrofit retrofit = HttpUtils.getRetrofit();
+                    HttpUtils.Myapi api = retrofit.create(HttpUtils.Myapi.class);
+                    api.getAllHistory(PuzzleApplication.getmUser().getCookie())
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Observer<HistoryBean>() {
+                                @Override
+                                public void onSubscribe(Disposable d) { }
+
+                                @Override
+                                public void onNext(HistoryBean historyBean) {
+                                    List<HistoryBean.ContentBean> contentBeans = historyBean.getContent();
+                                    historyItems.clear();
+                                    historyList.setAdapter(historyAdapter);
+                                    if (contentBeans == null) return;;
+                                    int index = 0;
+                                    for (HistoryBean.ContentBean contentBean: contentBeans){
+                                        index ++;
+                                        String mode = contentBean.getMode() + "×" +  contentBean.getMode();
+                                        String date = contentBean.getTime();
+                                        String score = ScoreToTime(contentBean.getScore());
+                                        historyItems.add(new HistoryItem(mode, date, score));
+                                    }
+                                    historyAdapter = new HistoryAdapter(History.this, historyItems);
+                                    historyList.setAdapter(historyAdapter);
+                                }
+
+                                @Override
+                                public void onError(Throwable e) { }
+
+                                @Override
+                                public void onComplete() { }
+                            });
+                }else if (position == 1 || position == 2 || position == 3 || position == 4){
+                    String mode = position == 1 ? "3":(position == 2 ? "4":(position == 3 ? "5" : "6"));
+                    Retrofit retrofit = HttpUtils.getRetrofit();
+                    HttpUtils.Myapi api = retrofit.create(HttpUtils.Myapi.class);
+                    api.getHistoryWithMode(PuzzleApplication.getmUser().getCookie(), mode)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Observer<HistoryBean>() {
+                                @Override
+                                public void onSubscribe(Disposable d) { }
+
+                                @Override
+                                public void onNext(HistoryBean historyBean) {
+                                    List<HistoryBean.ContentBean> contentBeans = historyBean.getContent();
+                                    historyItems.clear();
+                                    historyList.setAdapter(historyAdapter);
+                                    if (contentBeans == null) return;;
+                                    int index = 0;
+                                    for (HistoryBean.ContentBean contentBean: contentBeans){
+                                        index ++;
+                                        String mode = contentBean.getMode() + "×" +  contentBean.getMode();
+                                        String date = contentBean.getTime();
+                                        String score = ScoreToTime(contentBean.getScore());
+                                        historyItems.add(new HistoryItem(mode, date, score));
+                                    }
+                                    historyAdapter = new HistoryAdapter(History.this, historyItems);
+                                    historyList.setAdapter(historyAdapter);
+                                }
+
+                                @Override
+                                public void onError(Throwable e) { }
+
+                                @Override
+                                public void onComplete() { }
+                            });
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+        });
+
     }
 
     private String ScoreToTime(String score){
@@ -77,6 +164,16 @@ public class History extends AppCompatActivity {
         String second = scoreInt % 60 < 10 ? "0" + String.valueOf(scoreInt % 60):String.valueOf(scoreInt % 60);
         String minute = scoreInt / 60 < 10 ? "0" + String.valueOf(scoreInt / 60):String.valueOf(scoreInt / 60);
         return minute + ":" + second;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.history_back:
+                History.this.finish();
+            default:
+                break;
+        }
     }
 }
 
@@ -166,11 +263,7 @@ class HistoryAdapter extends BaseAdapter {
         // TODO Auto-generated method stub
         HisrotyViewHolder viewHolder;
         if(convertView==null){
-            if (position <= 2){
-                convertView = inflater.inflate(R.layout.rank_item_orange, null);
-            }else{
-                convertView = inflater.inflate(R.layout.rank_item_white, null);
-            }
+            convertView = inflater.inflate(R.layout.history_item, null);
             viewHolder = new HisrotyViewHolder();
             viewHolder.his_type = (TextView) convertView.findViewById(R.id.his_type);
             viewHolder.his_date = (TextView) convertView.findViewById(R.id.his_date);

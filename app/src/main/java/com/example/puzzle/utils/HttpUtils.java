@@ -1,5 +1,6 @@
 package com.example.puzzle.utils;
 
+import com.example.puzzle.PuzzleApplication;
 import com.example.puzzle.model.HistoryBean;
 import com.example.puzzle.model.LoginBean;
 import com.example.puzzle.model.LogoutBean;
@@ -18,6 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -51,15 +53,15 @@ public class HttpUtils {
         Observable<RankBean> getRecordWithMode(@Query("mode")String mode);
 
         @GET("user/record") //请求用户所有历史战绩
-        Observable<HistoryBean> getAllHistory();
+        Observable<HistoryBean> getAllHistory(@Header("Cookie") String cookie);
 
         @GET("user/record") //请求用户Mode对应战绩
         @Headers("Content-Type:application/x-www-form-urlencoded")
-        Observable<HistoryBean> getHistoryWithMode(@Query("mode")String mode);
+        Observable<HistoryBean> getHistoryWithMode(@Header("Cookie") String cookie, @Query("mode")String mode);
 
         @GET("user/info") //获取用户信息 rank username
         @Headers("Content-Type:application/x-www-form-urlencoded")
-        Observable<UserInfoBean> getUserInfo();
+        Observable<UserInfoBean> getUserInfo(@Header("Cookie") String cookie);
     }
 
     public static Retrofit getRetrofit() {

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -37,10 +38,11 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
-public class Rank extends AppCompatActivity{
+public class Rank extends AppCompatActivity implements View.OnClickListener {
     private List rankItems;
     private Spinner difficulty;
     private ListView rankList;
+    private ImageButton rank_back_button;
     private RankAdapter rankAdapter;
 
     @Override
@@ -50,6 +52,8 @@ public class Rank extends AppCompatActivity{
         rankItems = new ArrayList<RankItem>();
         difficulty = (Spinner) findViewById(R.id.rank_difficulty);
         rankList = (ListView) findViewById(R.id.rank_list);
+        rank_back_button = (ImageButton) findViewById(R.id.rank_back);
+        rank_back_button.setOnClickListener(this);
 
 
         Retrofit retrofit = HttpUtils.getRetrofit();
@@ -162,15 +166,22 @@ public class Rank extends AppCompatActivity{
         });
     }
 
-    private void ParseJsonData(String JsonData){
-
-    }
-
     private String ScoreToTime(String score){
         Integer scoreInt = Integer.parseInt(score);
         String second = scoreInt % 60 < 10 ? "0" + String.valueOf(scoreInt % 60):String.valueOf(scoreInt % 60);
         String minute = scoreInt / 60 < 10 ? "0" + String.valueOf(scoreInt / 60):String.valueOf(scoreInt / 60);
         return minute + ":" + second;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.rank_back:
+                Rank.this.finish();
+                break;
+            default:
+                break;
+        }
     }
 }
 
@@ -216,57 +227,6 @@ class RankItem{
     }
 }
 
-//class RankAdapter extends ArrayAdapter{
-//    private final int resourceId;
-//    private Context mContext;
-//    private List<RankItem> mData;
-//    LayoutInflater mInflater = null;
-//
-//    public RankAdapter(Context context, int resourceId, List<RankItem> data){
-//        super(context, resourceId, data);
-//        this.resourceId = resourceId;
-//        mContext = context;
-//        mData = data;
-//    }
-//    @Override
-//    public int getCount(){
-//        return mData.size();
-//    }
-//    @Override
-//    public Object getItem(int position){
-//        return null;
-//    }
-//
-//    @Override
-//    public View getView(int position, View convertView, ViewGroup parent) {
-//        ViewHolder viewHolder = new ViewHolder();
-//        if (convertView == null){
-//            viewHolder = new ViewHolder();
-//             mInflater = LayoutInflater.from(mContext);
-//            if (position <= 2){
-//                convertView = mInflater.inflate(R.layout.rank_item_orange, null);
-//            }else{
-//                convertView = mInflater.inflate(R.layout.rank_item_white, null);
-//            }
-//            viewHolder.rank_rank = (TextView) convertView.findViewById(R.id.rank_rank);
-//            viewHolder.rank_name = (TextView) convertView.findViewById(R.id.rank_name);
-//            viewHolder.rank_type = (TextView) convertView.findViewById(R.id.rank_type);
-//            viewHolder.rank_score = (TextView) convertView.findViewById(R.id.rank_score);
-//
-////            RankItem rankItem = (RankItem) getItem(position);
-//            RankItem rankItem = mData.get(position);
-//            viewHolder.rank_rank.setText(rankItem.getRank());
-//            viewHolder.rank_name.setText(rankItem.getUsername());
-//            viewHolder.rank_type.setText(rankItem.getMode());
-//            viewHolder.rank_score.setText(rankItem.getScore());
-//
-//            convertView.setTag(viewHolder);
-//        }else{
-//            viewHolder = (ViewHolder) convertView.getTag();
-//        }
-//        return convertView;
-//    }
-
 class ViewHolder{
     TextView rank_rank, rank_name, rank_type, rank_score;
 }
@@ -284,6 +244,11 @@ class RankAdapter extends BaseAdapter {
     public int getCount() {
         // TODO Auto-generated method stub
         return list.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return Integer.valueOf(list.get(position).getRank()) <= 3 ? 1 : 2;
     }
 
     @Override
@@ -316,22 +281,21 @@ class RankAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub
         ViewHolder viewHolder;
-        if(convertView==null){
-            if (position <= 2){
-                convertView = inflater.inflate(R.layout.rank_item_orange, null);
-            }else{
-                convertView = inflater.inflate(R.layout.rank_item_white, null);
-            }
-            viewHolder = new ViewHolder();
-            viewHolder.rank_rank = (TextView) convertView.findViewById(R.id.rank_rank);
-            viewHolder.rank_name = (TextView) convertView.findViewById(R.id.rank_name);
-            viewHolder.rank_type = (TextView) convertView.findViewById(R.id.rank_type);
-            viewHolder.rank_score = (TextView) convertView.findViewById(R.id.rank_score);
-            convertView.setTag(viewHolder);
+        int itemType = this.getItemViewType(position);
 
+        //强制重绘所有Item
+        if (itemType == 1){
+            convertView = inflater.inflate(R.layout.rank_item_orange, null);
         }else{
-            viewHolder = (ViewHolder) convertView.getTag();
+            convertView = inflater.inflate(R.layout.rank_item_white, null);
         }
+        viewHolder = new ViewHolder();
+        viewHolder.rank_rank = (TextView) convertView.findViewById(R.id.rank_rank);
+        viewHolder.rank_name = (TextView) convertView.findViewById(R.id.rank_name);
+        viewHolder.rank_type = (TextView) convertView.findViewById(R.id.rank_type);
+        viewHolder.rank_score = (TextView) convertView.findViewById(R.id.rank_score);
+        convertView.setTag(viewHolder);
+
         viewHolder.rank_rank.setText(list.get(position).getRank());
         viewHolder.rank_name.setText(list.get(position).getUsername());
         viewHolder.rank_type.setText(list.get(position).getMode());

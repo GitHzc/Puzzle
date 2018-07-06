@@ -8,13 +8,12 @@
     android:orientation="vertical"
     tools:context=".activity.Rank">
     <LinearLayout
-        android:id="@+id/back_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:layout_marginHorizontal="10dp">
         <ImageButton
-            android:id="@+id/activity_game_start_back"
+            android:id="@+id/rank_back"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:scaleType="fitCenter"
@@ -67,7 +66,8 @@
         <ListView
             android:id="@+id/rank_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical">
 
         </ListView>
 

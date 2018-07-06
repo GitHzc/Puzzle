@@ -7,7 +7,7 @@ package com.example.puzzle.model;
 public class User {
     String username;
     String password;
-    String cookie;
+    final String cookie;
 
     public User(String username, String password, String cookie) {
         this.username = username;
@@ -35,7 +35,7 @@ public class User {
         return cookie;
     }
 
-    public void setCookie(String cookie) {
-        this.cookie = cookie;
-    }
+//    public void setCookie(String cookie) {
+//        this.cookie = cookie;
+//    }
 }
