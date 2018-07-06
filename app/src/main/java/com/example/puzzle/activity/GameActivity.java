@@ -61,6 +61,7 @@ import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -105,6 +106,8 @@ public class GameActivity extends BaseActivity {
     private int left = 0;
     private int right = 0;
     private int rl = 1;
+    private Stack stack = new Stack();
+    private int st = 0;
 
     private final int DISH_WIDTH = 300;
     private final int DISH_HEIGHT = 300;
@@ -186,6 +189,21 @@ public class GameActivity extends BaseActivity {
 
         String curTimeString = String.format("%02d:%02d", curminute, cursecond);
         timeText.setText(curTimeString);
+        
+        if(st == 1){
+            while(!stack.empty()){
+                ImageView v = (ImageView)findViewById((int)stack.pop());
+                Matrix matrix=new Matrix();
+                matrix.postRotate((float) 90,v.getWidth()/2,v.getHeight()/2);
+                v.setImageMatrix(matrix);
+
+                GridLayout.LayoutParams lp = new GridLayout.LayoutParams(v.getLayoutParams());
+                lp.setMargins(0, 10, 10, 10);
+                v.setLayoutParams(lp);
+            }
+            st = 2;
+        }
+        st = 1;
     }
 
     @Override
@@ -356,10 +374,10 @@ public class GameActivity extends BaseActivity {
                     DragImageView imageView = new DragImageView(this);
                     imageView.setLayoutParams(layoutParams);
 
-                    Matrix matrix=new Matrix();
+                    
                     imageView.setScaleType(ImageView.ScaleType.MATRIX);   //required
-                    matrix.postRotate((float) 90,75,75);
-                    imageView.setImageMatrix(matrix);
+                    
+                    
 
                     imageView.setImageBitmap(IPL.get(j + i * mLevel).bitmap);
 
@@ -400,7 +418,7 @@ public class GameActivity extends BaseActivity {
                                 cleft = 0;
                             }
 
-                            matrix.setRotate( 90+ 90 * cright - 90 * cleft,75,75);
+                            matrix.setRotate( 90+ 90 * cright - 90 * cleft,view.getWidth()/2,view.getHeight()/2);
                             mapright.put(String.valueOf(view.getId()),String.valueOf(cright));
                             mapleft.put(String.valueOf(view.getId()),String.valueOf(cleft));
                             imageView.setImageMatrix(matrix);
@@ -408,6 +426,7 @@ public class GameActivity extends BaseActivity {
 
                         });
                     layViewContainer.addView(pieceList.get(aList), layoutParams);
+                    stack.push(pieceList.get(aList).getId());
                 }
 
             }
