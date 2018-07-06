@@ -24,6 +24,9 @@
         <activity android:name=".activity.GameStartActivity" />
         <activity android:name=".activity.ClipPictureActivity"/>
         <activity android:name=".activity.GameActivity"/>
+        <activity android:name=".activity.Rank" />
+        <activity android:name=".activity.User" />
+        <activity android:name=".activity.History"></activity>
     </application>
 
 </manifest>

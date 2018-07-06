@@ -36,8 +36,12 @@ public class MainPageActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.activity_main_page_rank:
+                Intent intentRank = new Intent(MainPageActivity.this, Rank.class);
+                startActivity(intentRank);
                 break;
             case R.id.activity_main_page_personal:
+                Intent intentUser = new Intent(MainPageActivity.this, User.class);
+                startActivity(intentUser);
                 break;
         }
     }

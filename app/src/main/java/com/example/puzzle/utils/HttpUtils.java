@@ -1,6 +1,10 @@
 package com.example.puzzle.utils;
 
+import com.example.puzzle.model.HistoryBean;
 import com.example.puzzle.model.LoginBean;
+import com.example.puzzle.model.LogoutBean;
+import com.example.puzzle.model.RankBean;
+import com.example.puzzle.model.UserInfoBean;
 
 import java.util.concurrent.TimeUnit;
 
@@ -13,8 +17,10 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
  * Created by Administrator on 2018/7/2 0002.
@@ -31,6 +37,29 @@ public class HttpUtils {
         @POST("user")
         @Headers("Content-Type:application/x-www-form-urlencoded")
         Observable<LoginBean> register(@Field("username")String username, @Field("passwd")String password, @Field("action")String action);
+
+        @FormUrlEncoded
+        @POST("user")
+        @Headers("Content-Type:application/x-www-form-urlencoded")
+        Observable<LogoutBean> logout(@Field("action")String action);
+
+        @GET("record") //请求所有战绩
+        Observable<RankBean> getAllRecord();
+
+        @GET("record") //请求Mode对应战绩
+        @Headers("Content-Type:application/x-www-form-urlencoded")
+        Observable<RankBean> getRecordWithMode(@Query("mode")String mode);
+
+        @GET("user/record") //请求用户所有历史战绩
+        Observable<HistoryBean> getAllHistory();
+
+        @GET("user/record") //请求用户Mode对应战绩
+        @Headers("Content-Type:application/x-www-form-urlencoded")
+        Observable<HistoryBean> getHistoryWithMode(@Query("mode")String mode);
+
+        @GET("user/info") //获取用户信息 rank username
+        @Headers("Content-Type:application/x-www-form-urlencoded")
+        Observable<UserInfoBean> getUserInfo();
     }
 
     public static Retrofit getRetrofit() {
