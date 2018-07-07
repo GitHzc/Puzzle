@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.puzzle.activity.GameStartActivity"
-    android:background="@android:color/black"
+    android:background="@color/backgroundDark"
     android:paddingHorizontal="20dp"
     android:paddingTop="15dp"
     android:orientation="vertical">
@@ -19,7 +19,7 @@
             android:layout_height="30dp"
             android:scaleType="fitCenter"
             android:src="@drawable/back"
-            android:background="@android:color/black"
+            android:background="@color/backgroundDark"
             android:padding="6dp"/>
     </LinearLayout>
     <RelativeLayout

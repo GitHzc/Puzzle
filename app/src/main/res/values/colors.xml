@@ -17,4 +17,5 @@
     <color name="personGrey">#e6e6e6</color>
     <color name="personGreyDark">#dcdcdc</color>
     <color name="transparent">#00000000</color>
+    <color name="backgroundDark">#191D29</color>
 </resources>

@@ -234,7 +234,6 @@ public class GameActivity extends BaseActivity {
         super.onStop();
         Intent intent = new Intent(GameActivity.this, MusicServer.class);
         stopService(intent);
-
     }
 
     @Override

@@ -26,7 +26,8 @@
         <activity android:name=".activity.GameActivity"/>
         <activity android:name=".activity.Rank" />
         <activity android:name=".activity.User" />
-        <activity android:name=".activity.History"></activity>
+        <activity android:name=".activity.History"/>
+        <service android:name=".bgm.MusicServer"/>
     </application>
 
 </manifest>
