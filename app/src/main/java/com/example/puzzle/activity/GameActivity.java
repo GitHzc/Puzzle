@@ -178,16 +178,25 @@ public class GameActivity extends BaseActivity {
         o.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                right = 0;
-                left = 0;
-                rl = 1;
-                view.setBackgroundResource(R.drawable.original);
-                r.setBackgroundResource(R.drawable.right);
-                l.setBackgroundResource(R.drawable.left);
+                view.setBackgroundResource(R.mipmap.original);
+                r.setBackgroundResource(R.mipmap.right);
+                l.setBackgroundResource(R.mipmap.left);
+
+                yuantutu();
             }
         });
 
 
+    }
+    
+    private void yuantutu(){
+        dialogBuilder =  new AlertDialog.Builder(mContext,R.style.dialog);
+        alertDialog = dialogBuilder
+                .setView(R.layout.yuantu)
+                .create();
+        alertDialog.show();
+        ImageView im = (ImageView) alertDialog.findViewById(R.id.yuan);
+        im.setImageBitmap(mBitmap);
     }
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(TimeEvent event) {
@@ -205,10 +214,6 @@ public class GameActivity extends BaseActivity {
                 Matrix matrix=new Matrix();
                 matrix.postRotate((float) 90,v.getWidth()/2,v.getHeight()/2);
                 v.setImageMatrix(matrix);
-
-                GridLayout.LayoutParams lp = new GridLayout.LayoutParams(v.getLayoutParams());
-                lp.setMargins(0, 10, 10, 10);
-                v.setLayoutParams(lp);
             }
             st = 2;
         }
@@ -354,9 +359,8 @@ public class GameActivity extends BaseActivity {
             Log.d(TAG, "split finish");
 
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT);
-            layoutParams.setMarginEnd(20);
+                    150, 150);
+            layoutParams.setMargins(0, 10, 10, 10);
 
             int mLevel = PuzzleApplication.getLevel();
 
