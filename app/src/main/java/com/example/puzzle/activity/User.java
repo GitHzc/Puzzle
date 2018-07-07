@@ -1,7 +1,9 @@
 package com.example.puzzle.activity;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.media.Image;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -62,6 +64,14 @@ public class User extends AppCompatActivity implements View.OnClickListener{
                             UserInfoBean.ContentBean contentBean = contentBeans.get(0);
                             String username = contentBean.getUsername();
                             String rank = contentBean.getRank();
+//                            try{
+//                                Typeface fontface = Typeface.createFromAsset(getAssets(), "font1.ttf");
+//                                user_name.setTypeface(fontface);
+//                                user_rank.setTypeface(fontface);
+//                            }catch (Exception e){
+//                                e.printStackTrace();
+//                            }
+
                             user_name.setText(username);
                             user_rank.setText("世界排名：" + rank);
                         }
