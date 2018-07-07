@@ -4,10 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -27,6 +25,8 @@ import java.io.IOException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.example.puzzle.utils.Utility.saveBitmap;
 
 public class ClipPictureActivity extends AppCompatActivity {
     private static final String TAG = "ClipPictureActivity";
@@ -86,8 +86,8 @@ public class ClipPictureActivity extends AppCompatActivity {
                 int y = (int) ((mStartY - (int) mPicture.getTranslateY()) / ratio);
                 int length = (int) (mLength / ratio);
                 mClipPicture = Bitmap.createBitmap(mPicture.getSourceBitmap(), x, y, length, length);
-                saveClipPicture();
-                PictureClipFinishEvent event = new PictureClipFinishEvent(mClipPicture);
+                String picturePath = saveBitmap(ClipPictureActivity.this, "picture4.jpg", mClipPicture);
+                PictureClipFinishEvent event = new PictureClipFinishEvent(mClipPicture, picturePath);
                 EventBus.getDefault().post(event);
                 finish();
         }
@@ -95,21 +95,5 @@ public class ClipPictureActivity extends AppCompatActivity {
 
     static public Intent getIntent(Context context) {
         return new Intent(context, ClipPictureActivity.class);
-    }
-
-    void saveClipPicture() {
-        String path = getCacheDir().getAbsolutePath() + File.separator + "temp.jpg";
-        File file = new File(path);
-         FileOutputStream out;
-        try {
-            out = new FileOutputStream(file);
-            mClipPicture.compress(Bitmap.CompressFormat.JPEG, 100, out);
-            out.flush();
-            out.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

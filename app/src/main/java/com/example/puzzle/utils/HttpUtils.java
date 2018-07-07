@@ -4,6 +4,7 @@ import com.example.puzzle.PuzzleApplication;
 import com.example.puzzle.model.HistoryBean;
 import com.example.puzzle.model.LoginBean;
 import com.example.puzzle.model.LogoutBean;
+import com.example.puzzle.model.PhotoBean;
 import com.example.puzzle.model.RankBean;
 import com.example.puzzle.model.SubmitScoreBean;
 import com.example.puzzle.model.UserInfoBean;
@@ -12,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import okhttp3.OkHttpClient;
+import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -24,6 +26,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 
 /**
  * Created by Administrator on 2018/7/2 0002.
@@ -68,7 +71,14 @@ public class HttpUtils {
         @FormUrlEncoded
         @Headers("Content-Type:application/x-www-form-urlencoded")
         Observable<SubmitScoreBean> submit(@Header("Cookie")String cookie, @Field("score")int score, @Field("time")String time, @Field("mode")int level);
+
+        @GET("photo")
+        Observable<PhotoBean> getPictureUrl();
+
+        @GET
+        Observable<ResponseBody> getPicture(@Url String url);
     }
+
 
     public static Retrofit getRetrofit() {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();

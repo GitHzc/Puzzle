@@ -9,12 +9,18 @@ import android.graphics.drawable.Drawable;
 
 public class PictureClipFinishEvent {
     Bitmap mBitmap;
+    String mPicturePath;
 
-    public PictureClipFinishEvent(Bitmap bitmap) {
+    public PictureClipFinishEvent(Bitmap bitmap, String picturePath) {
         mBitmap = bitmap;
+        mPicturePath = picturePath;
     }
 
     public Bitmap getBitmap() {
         return mBitmap;
+    }
+
+    public String getPicturePath() {
+        return mPicturePath;
     }
 }

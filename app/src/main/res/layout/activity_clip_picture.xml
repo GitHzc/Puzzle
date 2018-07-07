@@ -14,8 +14,9 @@
         android:padding="10dp">
         <ImageView
             android:id="@+id/activity_clip_picture_back"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:padding="6dp"
             android:src="@drawable/back"
             android:layout_marginStart="5dp"
             android:layout_centerVertical="true"/>
@@ -26,7 +27,8 @@
             android:text="@string/clip_picture"
             android:textSize="20sp"
             android:layout_marginStart="10dp"
-            android:textColor="@android:color/white"/>
+            android:textColor="@android:color/white"
+            android:layout_centerVertical="true"/>
         <Button
             android:id="@+id/activity_clip_picture_complete"
             android:layout_width="60dp"

@@ -9,13 +9,13 @@
     <LinearLayout
         android:id="@+id/error_message_layout"
         android:layout_width="match_parent"
-        android:layout_height="41dp"
+        android:layout_height="38dp"
         android:background="@color/red"
         android:visibility="gone">
         <ImageView
             android:id="@+id/close_button"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
             android:src="@drawable/close"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="5dp"/>
@@ -26,7 +26,7 @@
             android:layout_marginStart="20dp"
             tool:text="用户名已存在"
             android:textColor="@android:color/black"
-            android:textSize="20sp"/>
+            android:textSize="16sp"/>
     </LinearLayout>
     <com.example.puzzle.widget.KeyboardLayout
         android:id="@+id/keyboard_layout"

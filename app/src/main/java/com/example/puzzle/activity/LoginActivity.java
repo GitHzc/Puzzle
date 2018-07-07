@@ -3,7 +3,9 @@ package com.example.puzzle.activity;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -80,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+        setUsernameAndPassword();
     }
 
     private void scrollToBottom() {
@@ -93,74 +96,89 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick({R.id.activity_login_login_button, R.id.activity_login_register_button, R.id.close_button})
     public void onButtonClick(View view) {
-        Retrofit retrofit = HttpUtils.getRetrofit();
-        final String username = mUsername.getText().toString();
-        final String password = mPassword.getText().toString();
-        if (username.equals("") || password.equals("")) {
-            mErrorMessage.setText("用户名或密码不能为空");
-            mLinearLayout.setVisibility(View.VISIBLE);
-            return;
-        }
-        HttpUtils.Myapi api = retrofit.create(HttpUtils.Myapi.class);
+        String username = mUsername.getText().toString();
+        String password = mPassword.getText().toString();
         switch(view.getId()) {
             case R.id.close_button:
                 mLinearLayout.setVisibility(View.GONE);
                 break;
             case R.id.activity_login_login_button:
-                api.login(username, password, "login")
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Observer<Response<LoginBean>>() {
-                            @Override
-                            public void onSubscribe(Disposable d) {}
-
-                            @Override
-                            public void onNext(Response<LoginBean> response) {
-                                LoginBean loginBean = response.body();
-                                if (loginBean.getError().equals("")) {
-                                    User user = new User(username, password, response.headers().get("Set-Cookie"));
-                                    PuzzleApplication.setmUser(user);
-                                    Intent intent = MainPageActivity.getIntent(LoginActivity.this);
-                                    startActivity(intent);
-                                } else {
-                                    mLinearLayout.setVisibility(View.VISIBLE);
-                                    mErrorMessage.setText(loginBean.getError());
-                                }
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {}
-
-                            @Override
-                            public void onComplete() {}
-                        });
+                if (username.equals("") || password.equals("")) {
+                    mErrorMessage.setText("用户名或密码不能为空");
+                    mLinearLayout.setVisibility(View.VISIBLE);
+                    return;
+                }
+                login(username, password);
                 break;
             case R.id.activity_login_register_button:
-                api.register(username, password, "register")
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Observer<LoginBean>() {
-                            @Override
-                            public void onSubscribe(Disposable d) {}
-
-                            @Override
-                            public void onNext(LoginBean loginBean) {
-                                if (loginBean.getError().equals("")) {
-                                    mLinearLayout.setVisibility(View.GONE);
-                                    Toast.makeText(LoginActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    mLinearLayout.setVisibility(View.VISIBLE);
-                                    mErrorMessage.setText(loginBean.getError());
-                                }
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {}
-
-                            @Override
-                            public void onComplete() {}
-                        });
+                if (username.equals("") || password.equals("")) {
+                    mErrorMessage.setText("用户名或密码不能为空");
+                    mLinearLayout.setVisibility(View.VISIBLE);
+                    return;
+                }
+                register(username, password);
         }
+    }
+
+    private void login(final String username, final String password) {
+        Retrofit retrofit = HttpUtils.getRetrofit();
+        HttpUtils.Myapi api = retrofit.create(HttpUtils.Myapi.class);
+        api.login(username, password, "login")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<LoginBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {}
+
+                    @Override
+                    public void onNext(Response<LoginBean> response) {
+                        LoginBean loginBean = response.body();
+                        if (loginBean.getError().equals("")) {
+                            User user = new User(username, password, response.headers().get("Set-Cookie"));
+                            PuzzleApplication.setmUser(user);
+                            Intent intent = MainPageActivity.getIntent(LoginActivity.this);
+                            startActivity(intent);
+                        } else {
+                            mLinearLayout.setVisibility(View.VISIBLE);
+                            mErrorMessage.setText(loginBean.getError());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {}
+
+                    @Override
+                    public void onComplete() {}
+                });
+    }
+
+    private void register(final String username, final String password) {
+        Retrofit retrofit = HttpUtils.getRetrofit();
+        HttpUtils.Myapi api = retrofit.create(HttpUtils.Myapi.class);
+        api.register(username, password, "register")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<LoginBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {}
+
+                    @Override
+                    public void onNext(LoginBean loginBean) {
+                        if (loginBean.getError().equals("")) {
+                            mLinearLayout.setVisibility(View.GONE);
+                            login(username, password);
+                        } else {
+                            mLinearLayout.setVisibility(View.VISIBLE);
+                            mErrorMessage.setText(loginBean.getError());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {}
+
+                    @Override
+                    public void onComplete() {}
+                });
     }
 
     private void getPermission() {
@@ -196,5 +214,25 @@ public class LoginActivity extends AppCompatActivity {
 
     static public Intent getIntent(Context context) {
         return new Intent(context, LoginActivity.class);
+    }
+
+    private void saveUsernameAndPassword() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("username", mUsername.getText().toString());
+        editor.putString("password", mPassword.getText().toString());
+        editor.apply();
+    }
+
+    private void setUsernameAndPassword() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+        mUsername.setText(sharedPreferences.getString("username", ""));
+        mPassword.setText(sharedPreferences.getString("password", ""));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        saveUsernameAndPassword();
     }
 }

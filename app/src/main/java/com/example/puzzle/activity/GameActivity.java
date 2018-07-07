@@ -320,15 +320,9 @@ public class GameActivity extends BaseActivity {
         layViewContainer.removeAllViews();
         pieceList.clear();
 
-        int pictureId = getIntent().getIntExtra("pictureId", 0);
-        if (pictureId != -1) {
-            mBitmap = BitmapUtils.decodeSampledBitmapFromResources(getResources(),
-                    pictureId,
-                    DISH_WIDTH, DISH_HEIGHT);
-        } else {
-            String filePath = getCacheDir().getAbsolutePath() + File.separator + "temp.jpg";
-            mBitmap = BitmapUtils.decodeSampleBitmapFromPath(filePath, DISH_WIDTH, DISH_HEIGHT);
-        }
+        String picturePath = getIntent().getStringExtra("picturePath");
+        mBitmap = BitmapUtils.decodeSampleBitmapFromPath(picturePath, DISH_WIDTH, DISH_HEIGHT);
+
         dm = PuzzleApplication.getDishManager();
 
         if (dm == null) return;
