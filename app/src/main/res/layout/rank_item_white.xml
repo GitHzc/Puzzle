@@ -5,7 +5,7 @@
     android:id="@+id/rank"
     android:layout_width="match_parent"
     android:layout_height="30dp"
-    android:minHeight="40dp"
+    android:minHeight="35dp"
     android:gravity="center_horizontal"
     android:layout_marginVertical="10dp"
     android:background="@drawable/underline_blue">
@@ -15,7 +15,8 @@
         android:layout_height="wrap_content"
         android:text="1"
         android:textColor="#FFF"
-        android:textSize="18sp"
+        android:textSize="17sp"
+        android:textStyle="bold"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"/>
     <TextView
@@ -25,7 +26,8 @@
         android:text="Username"
         android:layout_marginLeft="20dp"
         android:textColor="#FFF"
-        android:textSize="18sp"
+        android:textSize="17sp"
+        android:textStyle="bold"
         android:layout_toRightOf="@+id/rank_rank"
         android:layout_alignParentBottom="true"/>
     <TextView
@@ -35,7 +37,8 @@
         android:text="Type"
         android:layout_marginRight="15dp"
         android:textColor="#FFF"
-        android:textSize="18sp"
+        android:textSize="17sp"
+        android:textStyle="bold"
         android:layout_toLeftOf="@+id/rank_score"
         android:layout_alignParentBottom="true"/>
     <TextView
@@ -44,7 +47,8 @@
         android:layout_height="wrap_content"
         android:text="Score"
         android:textColor="#FFF"
-        android:textSize="18sp"
+        android:textSize="17sp"
+        android:textStyle="bold"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"/>
 </RelativeLayout>

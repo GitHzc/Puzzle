@@ -6,12 +6,13 @@
     android:layout_height="match_parent"
     android:background="#191D29"
     android:orientation="vertical"
+    android:paddingBottom="20dp"
     tools:context=".activity.Rank">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="10dp"
-        android:layout_marginHorizontal="10dp">
+        android:layout_marginVertical="15dp"
+        android:layout_marginHorizontal="20dp">
         <ImageButton
             android:id="@+id/rank_back"
             android:layout_width="30dp"
@@ -36,15 +37,17 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:paddingHorizontal="15dp"
-            android:layout_marginVertical="20dp"
+            android:layout_marginVertical="15dp"
             android:text="RANKING"
             android:textSize="30dp"
+            android:textStyle="bold"
             android:textColor="#FD3D91"
             android:background="@drawable/underline_pink"/>
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:layout_marginVertical="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
             android:paddingVertical="5dp"
             android:background="@drawable/underline_greenlight">
             <ImageView

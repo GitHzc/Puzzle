@@ -15,7 +15,8 @@
         android:layout_height="wrap_content"
         android:text="Type"
         android:textColor="#FFF"
-        android:textSize="17sp"
+        android:textSize="16sp"
+        android:textStyle="bold"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"/>
     <TextView
@@ -25,7 +26,8 @@
         android:text="18/12/31 11:31"
         android:layout_marginHorizontal="40dp"
         android:textColor="#FFF"
-        android:textSize="17sp"
+        android:textSize="16sp"
+        android:textStyle="bold"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"/>
     <TextView
@@ -34,7 +36,8 @@
         android:layout_height="wrap_content"
         android:text="Score"
         android:textColor="#FD772E"
-        android:textSize="17sp"
+        android:textSize="16sp"
+        android:textStyle="bold"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"/>
 </RelativeLayout>
