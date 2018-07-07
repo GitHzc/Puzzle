@@ -178,9 +178,9 @@ public class GameActivity extends BaseActivity {
         o.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                view.setBackgroundResource(R.mipmap.original);
-                r.setBackgroundResource(R.mipmap.right);
-                l.setBackgroundResource(R.mipmap.left);
+                view.setBackgroundResource(R.drawable.original);
+                r.setBackgroundResource(R.drawable.right);
+                l.setBackgroundResource(R.drawable.left);
 
                 yuantutu();
             }
