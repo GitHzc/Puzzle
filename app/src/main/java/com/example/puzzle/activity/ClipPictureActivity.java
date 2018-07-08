@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.puzzle.R;
 import com.example.puzzle.event.PictureClipFinishEvent;
@@ -81,15 +82,20 @@ public class ClipPictureActivity extends AppCompatActivity {
                     mStartY = (int) mChooseBorder.getTopLeftY();
                     mLength = (int) mChooseBorder.getBorderLength();
                 }
+
                 float ratio = mPicture.getRatio();
                 int x = (int) ((mStartX - mPicture.getTranslateX()) / ratio);
                 int y = (int) ((mStartY - (int) mPicture.getTranslateY()) / ratio);
                 int length = (int) (mLength / ratio);
-                mClipPicture = Bitmap.createBitmap(mPicture.getSourceBitmap(), x, y, length, length);
-                String picturePath = saveBitmap(ClipPictureActivity.this, "picture4.jpg", mClipPicture);
-                PictureClipFinishEvent event = new PictureClipFinishEvent(mClipPicture, picturePath);
-                EventBus.getDefault().post(event);
-                finish();
+                try {
+                    mClipPicture = Bitmap.createBitmap(mPicture.getSourceBitmap(), x, y, length, length);
+                    String picturePath = saveBitmap(ClipPictureActivity.this, "picture6.jpg", mClipPicture);
+                    PictureClipFinishEvent event = new PictureClipFinishEvent(mClipPicture, picturePath);
+                    EventBus.getDefault().post(event);
+                    finish();
+                } catch (IllegalArgumentException e) {
+                    Toast.makeText(ClipPictureActivity.this, "图像裁剪超出边界", Toast.LENGTH_SHORT).show();
+                }
         }
     }
 
