@@ -52,6 +52,7 @@ public class Rank extends AppCompatActivity implements View.OnClickListener {
         rankItems = new ArrayList<RankItem>();
         difficulty = findViewById(R.id.rank_difficulty);
         rankList = findViewById(R.id.rank_list);
+        rankList.setEnabled(false);
         rank_back_button = findViewById(R.id.rank_back);
         rank_back_button.setOnClickListener(this);
 

@@ -41,6 +41,7 @@ public class History extends AppCompatActivity implements View.OnClickListener {
         setContentView(R.layout.activity_history);
         difficulty = findViewById(R.id.history_difficulty);
         historyList = findViewById(R.id.history_list);
+        historyList.setEnabled(false);
         his_back_button = findViewById(R.id.history_back);
         his_back_button.setOnClickListener(this);
         historyItems = new ArrayList<HistoryItem>();

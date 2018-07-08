@@ -29,6 +29,7 @@
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="20dp"
         android:padding="30dp"
         android:background="@drawable/user_border">
         <TextView
