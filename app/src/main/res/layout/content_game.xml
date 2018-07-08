@@ -48,7 +48,7 @@
                 android:layout_height="50dp"
                 android:id="@+id/original"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/original"
+                android:background="@drawable/original1"
                 />
             <Button
                 android:layout_width="50dp"

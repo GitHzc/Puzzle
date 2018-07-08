@@ -6,24 +6,28 @@ package com.example.puzzle.widget;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.puzzle.R;
+import com.example.puzzle.activity.MainPageActivity;
 
 
 public class Windialog extends Dialog implements android.view.View.OnClickListener {
 
     private Context context;
     private TextView txt;
-    private ImageButton re;
+    private Button againButton;
+    private Button returnButton;
 
     private Windialog.LeaveMyDialogListener listener;
 
     public interface LeaveMyDialogListener{
-        public void onClick(View view);
+        void onClick(View view);
     }
 
     public Windialog(Context context) {
@@ -45,10 +49,11 @@ public class Windialog extends Dialog implements android.view.View.OnClickListen
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.game_success);
 
-        re   = (ImageButton) findViewById(R.id.againButton);
+        againButton = findViewById(R.id.againButton);
+        againButton.setOnClickListener(this);
 
-        re.setOnClickListener(this);
-
+        returnButton = findViewById(R.id.returnButton);
+        returnButton.setOnClickListener(this);
     }
 
     @Override

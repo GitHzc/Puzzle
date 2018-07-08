@@ -37,11 +37,11 @@ public class User extends AppCompatActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
 
-        user_rank = (TextView) findViewById(R.id.user_rank);
-        user_name = (TextView) findViewById(R.id.user_name);
-        back_button = (ImageButton) findViewById(R.id.user_back_button);
-        history_button = (Button) findViewById(R.id.user_history_button);
-        logout_button = (Button) findViewById(R.id.user_logout_button);
+        user_rank = findViewById(R.id.user_rank);
+        user_name = findViewById(R.id.user_name);
+        back_button = findViewById(R.id.user_back_button);
+        history_button = findViewById(R.id.user_history_button);
+        logout_button = findViewById(R.id.user_logout_button);
 
         back_button.setOnClickListener(this);
         history_button.setOnClickListener(this);

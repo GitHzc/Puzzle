@@ -39,9 +39,9 @@ public class History extends AppCompatActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
-        difficulty = (Spinner) findViewById(R.id.history_difficulty);
-        historyList = (ListView) findViewById(R.id.history_list);
-        his_back_button = (ImageButton) findViewById(R.id.history_back);
+        difficulty = findViewById(R.id.history_difficulty);
+        historyList = findViewById(R.id.history_list);
+        his_back_button = findViewById(R.id.history_back);
         his_back_button.setOnClickListener(this);
         historyItems = new ArrayList<HistoryItem>();
 
@@ -58,7 +58,7 @@ public class History extends AppCompatActivity implements View.OnClickListener {
                     public void onNext(HistoryBean historyBean) {
                         List<HistoryBean.ContentBean> contentBeans = historyBean.getContent();
                         int index = 0;
-                        if (contentBeans == null) return;;
+                        if (contentBeans == null) return;
                         for (HistoryBean.ContentBean contentBean: contentBeans){
                             index ++;
                             String mode = contentBean.getMode() + "×" +  contentBean.getMode();
@@ -96,7 +96,7 @@ public class History extends AppCompatActivity implements View.OnClickListener {
                                     List<HistoryBean.ContentBean> contentBeans = historyBean.getContent();
                                     historyItems.clear();
                                     historyList.setAdapter(historyAdapter);
-                                    if (contentBeans == null) return;;
+                                    if (contentBeans == null) return;
                                     int index = 0;
                                     for (HistoryBean.ContentBean contentBean: contentBeans){
                                         index ++;
@@ -131,7 +131,7 @@ public class History extends AppCompatActivity implements View.OnClickListener {
                                     List<HistoryBean.ContentBean> contentBeans = historyBean.getContent();
                                     historyItems.clear();
                                     historyList.setAdapter(historyAdapter);
-                                    if (contentBeans == null) return;;
+                                    if (contentBeans == null) return;
                                     int index = 0;
                                     for (HistoryBean.ContentBean contentBean: contentBeans){
                                         index ++;
@@ -265,9 +265,9 @@ class HistoryAdapter extends BaseAdapter {
         if(convertView==null){
             convertView = inflater.inflate(R.layout.history_item, null);
             viewHolder = new HisrotyViewHolder();
-            viewHolder.his_type = (TextView) convertView.findViewById(R.id.his_type);
-            viewHolder.his_date = (TextView) convertView.findViewById(R.id.his_date);
-            viewHolder.his_score = (TextView) convertView.findViewById(R.id.his_score);
+            viewHolder.his_type = convertView.findViewById(R.id.his_type);
+            viewHolder.his_date = convertView.findViewById(R.id.his_date);
+            viewHolder.his_score = convertView.findViewById(R.id.his_score);
             convertView.setTag(viewHolder);
 
         }else{

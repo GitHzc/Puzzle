@@ -50,9 +50,9 @@ public class Rank extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rank);
         rankItems = new ArrayList<RankItem>();
-        difficulty = (Spinner) findViewById(R.id.rank_difficulty);
-        rankList = (ListView) findViewById(R.id.rank_list);
-        rank_back_button = (ImageButton) findViewById(R.id.rank_back);
+        difficulty = findViewById(R.id.rank_difficulty);
+        rankList = findViewById(R.id.rank_list);
+        rank_back_button = findViewById(R.id.rank_back);
         rank_back_button.setOnClickListener(this);
 
 
@@ -290,10 +290,10 @@ class RankAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.rank_item_white, null);
         }
         viewHolder = new ViewHolder();
-        viewHolder.rank_rank = (TextView) convertView.findViewById(R.id.rank_rank);
-        viewHolder.rank_name = (TextView) convertView.findViewById(R.id.rank_name);
-        viewHolder.rank_type = (TextView) convertView.findViewById(R.id.rank_type);
-        viewHolder.rank_score = (TextView) convertView.findViewById(R.id.rank_score);
+        viewHolder.rank_rank = convertView.findViewById(R.id.rank_rank);
+        viewHolder.rank_name = convertView.findViewById(R.id.rank_name);
+        viewHolder.rank_type = convertView.findViewById(R.id.rank_type);
+        viewHolder.rank_score = convertView.findViewById(R.id.rank_score);
         convertView.setTag(viewHolder);
 
         viewHolder.rank_rank.setText(list.get(position).getRank());

@@ -8,6 +8,8 @@ import com.example.puzzle.dish.DishManager;
 import com.example.puzzle.model.User;
 import com.example.puzzle.utils.StaticValue;
 
+import java.util.ArrayList;
+
 /**
  * Puzzle
  * Created by ZQ on 2016/3/21.
@@ -19,6 +21,16 @@ public class PuzzleApplication extends Application{
     private static User mUser;
 
     private static DishManager dm;
+
+    private static ArrayList<String> picturePath;
+
+    public static ArrayList<String> getPicturePath() {
+        return picturePath;
+    }
+
+    public static void setPicturePath(ArrayList<String> picturePath) {
+        PuzzleApplication.picturePath = picturePath;
+    }
 
     public static int getLevel() {
         return level;

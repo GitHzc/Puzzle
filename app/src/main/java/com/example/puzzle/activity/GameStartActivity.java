@@ -1,29 +1,17 @@
 package com.example.puzzle.activity;
 
-import android.app.Dialog;
-import android.app.FragmentManager;
-import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatDialogFragment;
-import android.util.Log;
-import android.view.LayoutInflater;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.example.puzzle.PuzzleApplication;
 import com.example.puzzle.R;
 import com.example.puzzle.event.PictureClipFinishEvent;
@@ -35,22 +23,18 @@ import com.example.puzzle.widget.ChooseDifficultyFragment;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.w3c.dom.Text;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.Response;
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 
@@ -76,7 +60,7 @@ public class GameStartActivity extends AppCompatActivity {
     Intent mIntent;
     int pictureIndex;
     LinearLayout mSelected = null;
-    ArrayList<String> picturePath;
+    ArrayList<String> mPicturePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,34 +68,33 @@ public class GameStartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game_start);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
-        if (savedInstanceState != null) {
-            picturePath = savedInstanceState.getStringArrayList("picturePath");
+        if ((mPicturePath = PuzzleApplication.getPicturePath()) != null) {
             setPicture();
         } else {
-            picturePath = new ArrayList<>();
+            mPicturePath = new ArrayList<>();
             pictureIndex = 0;
             getPhotos();
         }
     }
 
     void setPicture() {
-        File f1 = new File(picturePath.get(0));
+        File f1 = new File(mPicturePath.get(0));
         mPicture1.setImageURI(Uri.fromFile(f1));
-        File f2 = new File(picturePath.get(1));
+        File f2 = new File(mPicturePath.get(1));
         mPicture2.setImageURI(Uri.fromFile(f2));
-        File f3 = new File(picturePath.get(2));
+        File f3 = new File(mPicturePath.get(2));
         mPicture3.setImageURI(Uri.fromFile(f3));
     }
 
     @OnClick({
-                R.id.activity_game_start_picture1, R.id.activity_game_start_picture2,
-                R.id.activity_game_start_picture3, R.id.activity_game_start_choose_from_album,
-                R.id.activity_game_start_choose_difficulty, R.id.activity_game_start_button,
-                R.id.activity_game_start_back
+            R.id.activity_game_start_picture1, R.id.activity_game_start_picture2,
+            R.id.activity_game_start_picture3, R.id.activity_game_start_choose_from_album,
+            R.id.activity_game_start_choose_difficulty, R.id.activity_game_start_button,
+            R.id.activity_game_start_back
     })
     void onClickPicture(View view) {
         mIntent = GameActivity.getIntent(GameStartActivity.this);
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.activity_game_start_picture1:
                 resetSelected();
                 setSelected((LinearLayout) mPicture1.getParent());
@@ -142,10 +125,10 @@ public class GameStartActivity extends AppCompatActivity {
                         PuzzleApplication.setLevel(index + 3);
                     }
                 });
-                dialog.show(manager,"singleDialog");
+                dialog.show(manager, "singleDialog");
                 break;
             case R.id.activity_game_start_button:
-                mIntent.putExtra("picturePath", picturePath.get(pictureIndex));
+                mIntent.putExtra("picturePath", mPicturePath.get(pictureIndex));
                 startActivity(mIntent);
                 break;
             case R.id.activity_game_start_back:
@@ -178,7 +161,7 @@ public class GameStartActivity extends AppCompatActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void onPictureClipFinish(PictureClipFinishEvent event) {
-        picturePath.add(event.getPicturePath());
+        mPicturePath.add(event.getPicturePath());
         mChooseFromAlbum.removeAllViews();
         ImageView clipPicture = new ImageView(GameStartActivity.this);
         clipPicture.setImageBitmap(event.getBitmap());
@@ -191,6 +174,7 @@ public class GameStartActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        PuzzleApplication.setPicturePath(mPicturePath);
     }
 
     void resetSelected() {
@@ -203,7 +187,7 @@ public class GameStartActivity extends AppCompatActivity {
         mSelected = selected;
         mSelected.setBackgroundResource(R.drawable.blue_shadow);
     }
-    
+
     private void getPhotos() {
         Retrofit retrofit = HttpUtils.getRetrofit();
         final HttpUtils.Myapi api = retrofit.create(HttpUtils.Myapi.class);
@@ -227,7 +211,7 @@ public class GameStartActivity extends AppCompatActivity {
                         String name = "picture" + (pictureIndex + 1) + ".jpg";
                         String path = savePicture(GameStartActivity.this, name, responseBody);
                         if (path != null) {
-                            picturePath.add(path);
+                            mPicturePath.add(path);
                             pictureIndex++;
                         }
                         return path;
@@ -253,9 +237,5 @@ public class GameStartActivity extends AppCompatActivity {
                 });
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putStringArrayList("picturePath", picturePath);
-    }
+
 }

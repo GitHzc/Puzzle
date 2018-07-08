@@ -18,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewStub;
 import android.view.Window;
@@ -146,9 +147,9 @@ public class GameActivity extends BaseActivity {
         initialization();
         EventBus.getDefault().post(new DishManagerInitFinishEvent());
 
-        final Button r = (Button)findViewById(R.id.right);
-        final Button l = (Button)findViewById(R.id.left);
-        final Button o = (Button)findViewById(R.id.original);
+        final Button r = findViewById(R.id.right);
+        final Button l = findViewById(R.id.left);
+        final Button o = findViewById(R.id.original);
         r.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -174,30 +175,36 @@ public class GameActivity extends BaseActivity {
             }
         });
 
-
-        o.setOnClickListener(new View.OnClickListener() {
+        o.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View view) {
-                view.setBackgroundResource(R.drawable.original);
-                r.setBackgroundResource(R.drawable.right);
-                l.setBackgroundResource(R.drawable.left);
-
-                yuantutu();
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_UP:
+                        o.setBackgroundResource(R.drawable.original1);
+                        alertDialog.dismiss();
+                        break;
+                    case MotionEvent.ACTION_DOWN:
+                        o.setBackgroundResource(R.drawable.original);
+                        r.setBackgroundResource(R.drawable.right);
+                        l.setBackgroundResource(R.drawable.left);
+                        yuantutu();
+                        break;
+                }
+                return true;
             }
         });
-
-
     }
-    
+
     private void yuantutu(){
         dialogBuilder =  new AlertDialog.Builder(mContext,R.style.dialog);
         alertDialog = dialogBuilder
                 .setView(R.layout.yuantu)
                 .create();
         alertDialog.show();
-        ImageView im = (ImageView) alertDialog.findViewById(R.id.yuan);
+        ImageView im = alertDialog.findViewById(R.id.yuan);
         im.setImageBitmap(mBitmap);
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(TimeEvent event) {
         time++;
@@ -210,7 +217,7 @@ public class GameActivity extends BaseActivity {
         
         if(st == 1){
             while(!stack.empty()){
-                ImageView v = (ImageView)findViewById((int)stack.pop());
+                ImageView v = findViewById((int)stack.pop());
                 Matrix matrix=new Matrix();
                 matrix.postRotate((float) 90,v.getWidth()/2,v.getHeight()/2);
                 v.setImageMatrix(matrix);
@@ -291,7 +298,11 @@ public class GameActivity extends BaseActivity {
                     @Override
                     public void onClick(View view) {
                         switch(view.getId()){
-
+                            case R.id.returnButton:
+                                Intent intent = MainPageActivity.getIntent(GameActivity.this);
+                                startActivity(intent);
+                                dialogwin.dismiss();
+                                finish();
                             case R.id.againButton:
                                 dialogwin.dismiss();
                                 finish();
@@ -353,20 +364,19 @@ public class GameActivity extends BaseActivity {
             Log.d(TAG, "split finish");
 
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                    150, 150);
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
             layoutParams.setMargins(0, 10, 10, 10);
 
             int mLevel = PuzzleApplication.getLevel();
+            layViewContainer.setColumnCount(mLevel);
 
             for (int i = 0; i < mLevel; i++) {
                 for (int j = 0; j < mLevel; j++) {
                     DragImageView imageView = new DragImageView(this);
                     imageView.setLayoutParams(layoutParams);
 
-                    
                     imageView.setScaleType(ImageView.ScaleType.MATRIX);   //required
-                    
-                    
 
                     imageView.setImageBitmap(IPL.get(j + i * mLevel).bitmap);
 
@@ -391,7 +401,7 @@ public class GameActivity extends BaseActivity {
                         @Override
                         public void onClick(View view) {
                             int id = view.getId();
-                            ImageView imageView = (ImageView)findViewById(id);
+                            ImageView imageView = findViewById(id);
                             Matrix matrix= view.getMatrix();
 
                             int cright = Integer.valueOf(mapright.get(String.valueOf(id))).intValue();
@@ -515,7 +525,7 @@ public class GameActivity extends BaseActivity {
         int curminute = time / 60;
         int cursecond = time % 60;
 
-        TextView timpause = (TextView) dialogpause.findViewById(R.id.timepause);
+        TextView timpause = dialogpause.findViewById(R.id.timepause);
         timpause.setText(String.format("%02d:%02d", curminute, cursecond));
     }
 

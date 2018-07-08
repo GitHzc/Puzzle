@@ -25,7 +25,7 @@ public class Pausedialog extends Dialog implements android.view.View.OnClickList
     private Pausedialog.LeaveMyDialogListener listener;
 
     public interface LeaveMyDialogListener{
-        public void onClick(View view);
+        void onClick(View view);
     }
 
     public Pausedialog(Context context) {
@@ -47,9 +47,9 @@ public class Pausedialog extends Dialog implements android.view.View.OnClickList
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.pause);
 
-        goon = (Button) findViewById(R.id.goon);
-        retu = (Button) findViewById(R.id.retu);
-        again = (Button) findViewById(R.id.again);
+        goon = findViewById(R.id.goon);
+        retu = findViewById(R.id.retu);
+        again = findViewById(R.id.again);
         goon.setOnClickListener(this);
         retu.setOnClickListener(this);
         again.setOnClickListener(this);
