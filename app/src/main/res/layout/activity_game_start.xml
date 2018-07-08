@@ -58,94 +58,146 @@
                 android:background="@color/greenLight"/>
         </LinearLayout>
     </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/bottom_shadow_background"
         android:orientation="vertical"
-        android:padding="10dp"
-        android:layout_marginBottom="20dp">
+        android:padding="10dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/choose_picture"
                 android:textColor="@color/fontColorBlack"
-                android:textSize="20sp"/>
+                android:textSize="20sp" />
         </LinearLayout>
-        <LinearLayout
+
+        <ScrollView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="5dp">
+            android:layout_height="306dp">
+
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="7dp">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="5dp"
+                android:orientation="vertical">
+
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="3dp"
-                    android:layout_marginEnd="7dp">
-                    <ImageView
-                        android:id="@+id/activity_game_start_picture1"
-                        android:layout_width="140dp"
-                        android:layout_height="140dp"
-                        android:scaleType="fitCenter" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="3dp">
-                    <ImageView
-                        android:id="@+id/activity_game_start_picture2"
-                        android:layout_width="140dp"
-                        android:layout_height="140dp"
-                        android:scaleType="fitCenter"/>
-                </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="3dp"
-                    android:layout_marginEnd="7dp">
-                    <ImageView
-                        android:id="@+id/activity_game_start_picture3"
-                        android:layout_width="140dp"
-                        android:layout_height="140dp"
-                        android:scaleType="fitCenter" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="3dp">
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="7dp">
+
                     <LinearLayout
-                        android:id="@+id/activity_game_start_choose_from_album"
-                        android:layout_width="140dp"
-                        android:layout_height="140dp"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:background="@color/greenLight">
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="7dp"
+                        android:padding="3dp">
+
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/picture" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@android:color/white"
-                            android:text="@string/choose_from_album"/>
+                            android:id="@+id/activity_game_start_picture1"
+                            android:layout_width="140dp"
+                            android:layout_height="140dp"
+                            android:scaleType="fitCenter" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="3dp">
+
+                        <ImageView
+                            android:id="@+id/activity_game_start_picture2"
+                            android:layout_width="140dp"
+                            android:layout_height="140dp"
+                            android:scaleType="fitCenter" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="7dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="7dp"
+                        android:padding="3dp">
+
+                        <ImageView
+                            android:id="@+id/activity_game_start_picture3"
+                            android:layout_width="140dp"
+                            android:layout_height="140dp"
+                            android:scaleType="fitCenter" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="3dp">
+
+                        <ImageView
+                            android:id="@+id/activity_game_start_picture4"
+                            android:layout_width="140dp"
+                            android:layout_height="140dp"
+                            android:scaleType="fitCenter" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="7dp"
+                        android:padding="3dp">
+
+                        <ImageView
+                            android:id="@+id/activity_game_start_picture5"
+                            android:layout_width="140dp"
+                            android:layout_height="140dp"
+                            android:scaleType="fitCenter" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="3dp">
+
+                        <LinearLayout
+                            android:id="@+id/activity_game_start_choose_from_album"
+                            android:layout_width="140dp"
+                            android:layout_height="140dp"
+                            android:background="@color/greenLight"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/picture" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/choose_from_album"
+                                android:textColor="@android:color/white" />
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
+        </ScrollView>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

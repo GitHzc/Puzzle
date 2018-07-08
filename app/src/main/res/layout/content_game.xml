@@ -6,23 +6,32 @@
     android:layout_height="match_parent"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="studio.androiddev.puzzle.activity.GameActivity"
     tools:showIn="@layout/activity_game"
     android:id="@+id/gameContainer"
     android:orientation="vertical"
     android:background="#191D29">
 
-
-    <ImageView
-        android:layout_width="320dp"
-        android:layout_height="325dp"
-        android:paddingStart="15dp"
-        android:paddingBottom="20dp"
-        android:paddingEnd="15dp"
-        android:paddingTop="20dp"
-        android:id="@+id/dish"
-        android:background="@drawable/dish_background"
-        android:layout_gravity="center_horizontal"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+        <ImageView
+            android:layout_width="320dp"
+            android:layout_height="325dp"
+            android:paddingStart="15dp"
+            android:paddingBottom="20dp"
+            android:paddingEnd="15dp"
+            android:paddingTop="20dp"
+            android:id="@+id/dish"
+            android:background="@drawable/dish_background" />
+        <TextView
+            android:id="@+id/puzzleHint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/puzzle_hint"
+            android:textColor="@color/fontColorBlack"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
 
 
     <ViewStub
@@ -72,7 +81,9 @@
             android:layout_gravity="right"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp">
-
+            <HorizontalScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
             <GridLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -81,7 +92,7 @@
                 android:layout_marginBottom="10dp"
                 android:columnCount="3">
             </GridLayout >
-
+            </HorizontalScrollView>
         </ScrollView>
     </RelativeLayout>
 

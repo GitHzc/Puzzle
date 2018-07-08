@@ -55,6 +55,10 @@ public class GameStartActivity extends AppCompatActivity {
     ImageView mPicture2;
     @BindView(R.id.activity_game_start_picture3)
     ImageView mPicture3;
+    @BindView(R.id.activity_game_start_picture4)
+    ImageView mPicture4;
+    @BindView(R.id.activity_game_start_picture5)
+    ImageView mPicture5;
     @BindView(R.id.activity_game_start_level)
     TextView mLevel;
     Intent mIntent;
@@ -68,6 +72,7 @@ public class GameStartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game_start);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
+        setLevel();
         if ((mPicturePath = PuzzleApplication.getPicturePath()) != null) {
             setPicture();
         } else {
@@ -77,6 +82,11 @@ public class GameStartActivity extends AppCompatActivity {
         }
     }
 
+    void setLevel() {
+        String[] levels = getResources().getStringArray(R.array.difficulty);
+        mLevel.setText(levels[PuzzleApplication.getLevel() - 3]);
+    }
+
     void setPicture() {
         File f1 = new File(mPicturePath.get(0));
         mPicture1.setImageURI(Uri.fromFile(f1));
@@ -84,11 +94,16 @@ public class GameStartActivity extends AppCompatActivity {
         mPicture2.setImageURI(Uri.fromFile(f2));
         File f3 = new File(mPicturePath.get(2));
         mPicture3.setImageURI(Uri.fromFile(f3));
+        File f4 = new File(mPicturePath.get(3));
+        mPicture4.setImageURI(Uri.fromFile(f4));
+        File f5 = new File(mPicturePath.get(4));
+        mPicture5.setImageURI(Uri.fromFile(f5));
     }
 
     @OnClick({
             R.id.activity_game_start_picture1, R.id.activity_game_start_picture2,
-            R.id.activity_game_start_picture3, R.id.activity_game_start_choose_from_album,
+            R.id.activity_game_start_picture3, R.id.activity_game_start_picture4,
+            R.id.activity_game_start_picture5, R.id.activity_game_start_choose_from_album,
             R.id.activity_game_start_choose_difficulty, R.id.activity_game_start_button,
             R.id.activity_game_start_back
     })
@@ -110,9 +125,19 @@ public class GameStartActivity extends AppCompatActivity {
                 setSelected((LinearLayout) mPicture3.getParent());
                 pictureIndex = 2;
                 break;
+            case R.id.activity_game_start_picture4:
+                resetSelected();
+                setSelected((LinearLayout) mPicture4.getParent());
+                pictureIndex = 3;
+                break;
+            case R.id.activity_game_start_picture5:
+                resetSelected();
+                setSelected((LinearLayout) mPicture5.getParent());
+                pictureIndex = 4;
+                break;
             case R.id.activity_game_start_choose_from_album:
                 choosePicture();
-                pictureIndex = 3;
+                pictureIndex = 5;
                 break;
             case R.id.activity_game_start_choose_difficulty:
                 android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
@@ -232,10 +257,14 @@ public class GameStartActivity extends AppCompatActivity {
                             case '3':
                                 mPicture3.setImageURI(Uri.fromFile(file));
                                 break;
+                            case '4':
+                                mPicture4.setImageURI(Uri.fromFile(file));
+                                break;
+                            case '5':
+                                mPicture5.setImageURI(Uri.fromFile(file));
+                                break;
                         }
                     }
                 });
     }
-
-
 }

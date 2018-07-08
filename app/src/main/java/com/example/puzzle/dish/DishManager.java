@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.puzzle.PuzzleApplication;
+import com.example.puzzle.event.DragStartEvent;
 import com.example.puzzle.event.GameSuccessEvent;
 import com.example.puzzle.event.PieceMoveSuccessEvent;
 import com.example.puzzle.utils.DensityUtil;
@@ -64,6 +65,8 @@ public class DishManager{
     static float width;
     static float height;
 
+    private boolean firstDrag;
+
     public DishManager(int level){
         mLevel = level;
         mSize = level * level;
@@ -106,6 +109,7 @@ public class DishManager{
      * @param imageView 新游戏的拼盘
      */
     public void initNewGame(Bitmap bitmap, ImageView imageView){
+        firstDrag = true;
         if(bitmap == null || imageView == null) return;
 
         if(mBitmap != null && !mBitmap.isRecycled()){
@@ -122,6 +126,11 @@ public class DishManager{
         imageView.setOnDragListener(new View.OnDragListener() {
             @Override
             public boolean onDrag(View v, DragEvent event) {
+                if (firstDrag) {
+                    EventBus.getDefault().post(new DragStartEvent());
+                    firstDrag = false;
+                }
+
                 int x = (int) event.getX();
                 int y = (int) event.getY();
                 int index = (int) event.getLocalState();

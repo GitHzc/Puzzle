@@ -42,6 +42,7 @@ import com.example.puzzle.bgm.MusicServer;
 import com.example.puzzle.dish.DishManager;
 import com.example.puzzle.dish.DragImageView;
 import com.example.puzzle.event.DishManagerInitFinishEvent;
+import com.example.puzzle.event.DragStartEvent;
 import com.example.puzzle.event.GameSuccessEvent;
 import com.example.puzzle.event.PieceMoveSuccessEvent;
 import com.example.puzzle.event.TimeEvent;
@@ -95,6 +96,8 @@ public class GameActivity extends BaseActivity {
     RelativeLayout gameview;
     @BindView(R.id.pa)
     ImageView pa;
+    @BindView(R.id.puzzleHint)
+    TextView puzzleHint;
 
     private AlertDialog alertDialog = null;
     private AlertDialog.Builder dialogBuilder = null;
@@ -366,7 +369,7 @@ public class GameActivity extends BaseActivity {
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT);
-            layoutParams.setMargins(0, 10, 10, 10);
+            layoutParams.setMargins(0, 10, 0, 10);
 
             int mLevel = PuzzleApplication.getLevel();
             layViewContainer.setColumnCount(mLevel);
@@ -546,6 +549,11 @@ public class GameActivity extends BaseActivity {
                         }
                     }
                 });
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    void onDragStartEvent(DragStartEvent event) {
+        puzzleHint.setVisibility(View.GONE);
     }
 }
 
