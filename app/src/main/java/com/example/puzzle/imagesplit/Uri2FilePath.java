@@ -7,60 +7,59 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 
 public class Uri2FilePath {
-	public String path=null;
-	public Uri2FilePath(Uri uri, Activity activity) {
+    public String path = null;
 
-     	String path = "";
+    public Uri2FilePath(Uri uri, Activity activity) {
 
-     	if (DocumentsContract.isDocumentUri(activity, uri)) {
+        String path = "";
 
-     	String wholeID = DocumentsContract.getDocumentId(uri);
+        if (DocumentsContract.isDocumentUri(activity, uri)) {
 
-     	String id = wholeID.split(":")[1];
+            String wholeID = DocumentsContract.getDocumentId(uri);
 
-     	String[] column = { MediaStore.Images.Media.DATA };
+            String id = wholeID.split(":")[1];
 
-     	String sel = MediaStore.Images.Media._ID + "=?";
+            String[] column = {MediaStore.Images.Media.DATA};
 
-     	Cursor cursor = activity.getContentResolver().query(
+            String sel = MediaStore.Images.Media._ID + "=?";
 
-     	MediaStore.Images.Media.EXTERNAL_CONTENT_URI, column, sel,
+            Cursor cursor = activity.getContentResolver().query(
 
-     	new String[] { id }, null);
+                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI, column, sel,
 
-     	int columnIndex = cursor.getColumnIndex(column[0]);
+                    new String[]{id}, null);
 
-     	if (cursor.moveToFirst()) {
+            int columnIndex = cursor.getColumnIndex(column[0]);
 
-     	path = cursor.getString(columnIndex);
+            if (cursor.moveToFirst()) {
 
-     	}
+                path = cursor.getString(columnIndex);
 
-     	cursor.close();
+            }
 
-     	} else {
+            cursor.close();
 
-     	String[] projection = { MediaStore.Images.Media.DATA };
+        } else {
 
-     	Cursor cursor = activity.getContentResolver().query(uri,
+            String[] projection = {MediaStore.Images.Media.DATA};
 
-     	projection, null, null, null);
+            Cursor cursor = activity.getContentResolver().query(uri,
 
-     	int column_index = cursor
+                    projection, null, null, null);
 
-     	.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            int column_index = cursor
 
-     	cursor.moveToFirst();
+                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
 
-     	path = cursor.getString(column_index);
+            cursor.moveToFirst();
 
-     	}
+            path = cursor.getString(column_index);
+
+        }
 
 
+        this.path = path;
 
-     	this.path=path;
 
-     	 
-
-     	} 
+    }
 }

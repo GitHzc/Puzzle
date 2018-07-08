@@ -1,11 +1,8 @@
 package com.example.puzzle.activity;
 
 import android.content.Intent;
-import android.graphics.Typeface;
-import android.media.Image;
-import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -14,7 +11,6 @@ import android.widget.TextView;
 import com.example.puzzle.PuzzleApplication;
 import com.example.puzzle.R;
 import com.example.puzzle.model.LogoutBean;
-import com.example.puzzle.model.RankBean;
 import com.example.puzzle.model.UserInfoBean;
 import com.example.puzzle.utils.HttpUtils;
 
@@ -26,12 +22,13 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
-public class User extends AppCompatActivity implements View.OnClickListener{
+public class User extends AppCompatActivity implements View.OnClickListener {
     private TextView user_rank;
     private TextView user_name;
     private ImageButton back_button;
     private Button history_button;
     private Button logout_button;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,22 +52,16 @@ public class User extends AppCompatActivity implements View.OnClickListener{
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<UserInfoBean>() {
                     @Override
-                    public void onSubscribe(Disposable d) { }
+                    public void onSubscribe(Disposable d) {
+                    }
 
                     @Override
                     public void onNext(UserInfoBean userInfoBean) {
                         List<UserInfoBean.ContentBean> contentBeans = userInfoBean.getContent();
-                        if(contentBeans != null){
+                        if (contentBeans != null) {
                             UserInfoBean.ContentBean contentBean = contentBeans.get(0);
                             String username = contentBean.getUsername();
                             String rank = contentBean.getRank();
-//                            try{
-//                                Typeface fontface = Typeface.createFromAsset(getAssets(), "font1.ttf");
-//                                user_name.setTypeface(fontface);
-//                                user_rank.setTypeface(fontface);
-//                            }catch (Exception e){
-//                                e.printStackTrace();
-//                            }
 
                             user_name.setText(username);
                             user_rank.setText("世界排名：" + rank);
@@ -78,17 +69,19 @@ public class User extends AppCompatActivity implements View.OnClickListener{
                     }
 
                     @Override
-                    public void onError(Throwable e) { }
+                    public void onError(Throwable e) {
+                    }
 
                     @Override
-                    public void onComplete() { }
+                    public void onComplete() {
+                    }
                 });
 
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.user_back_button:
                 User.this.finish();
                 break;
@@ -105,7 +98,8 @@ public class User extends AppCompatActivity implements View.OnClickListener{
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Observer<LogoutBean>() {
                             @Override
-                            public void onSubscribe(Disposable d) { }
+                            public void onSubscribe(Disposable d) {
+                            }
 
                             @Override
                             public void onNext(LogoutBean logoutBean) {
@@ -114,14 +108,16 @@ public class User extends AppCompatActivity implements View.OnClickListener{
                                     Intent intent = new Intent(User.this, LoginActivity.class);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(intent);
-                                }else return;
+                                } else return;
                             }
 
                             @Override
-                            public void onError(Throwable e) { }
+                            public void onError(Throwable e) {
+                            }
 
                             @Override
-                            public void onComplete() { }
+                            public void onComplete() {
+                            }
                         });
                 break;
             default:

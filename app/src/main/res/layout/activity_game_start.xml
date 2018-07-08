@@ -1,61 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.puzzle.activity.GameStartActivity"
     android:background="@color/backgroundDark"
+    android:orientation="vertical"
     android:paddingHorizontal="20dp"
     android:paddingTop="15dp"
-    android:orientation="vertical">
+    tools:context="com.example.puzzle.activity.GameStartActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp">
+
         <ImageButton
             android:id="@+id/activity_game_start_back"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/back"
             android:background="@color/backgroundDark"
-            android:padding="6dp"/>
+            android:padding="6dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/back" />
     </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="64dp"
+        android:layout_marginBottom="15dp"
         android:background="@drawable/bottom_shadow_background"
-        android:padding="10dp"
-        android:layout_marginBottom="15dp">
+        android:padding="10dp">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:text="@string/choose_style"
-            android:textSize="20sp"
             android:textColor="@color/fontColorBlack"
-            android:layout_centerVertical="true"/>
+            android:textSize="20sp" />
+
         <LinearLayout
             android:id="@+id/activity_game_start_choose_difficulty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:orientation="vertical"
-            android:layout_marginEnd="10dp">
+            android:layout_marginEnd="10dp"
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/activity_game_start_level"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingEnd="3dp"
+                android:paddingStart="3dp"
                 android:text="@string/initial_difficulty"
                 android:textColor="@color/fontColorBlack"
-                android:textSize="20sp"
-                android:paddingStart="3dp"
-                android:paddingEnd="3dp"/>
+                android:textSize="20sp" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="@color/greenLight"/>
+                android:background="@color/greenLight" />
         </LinearLayout>
     </RelativeLayout>
 
@@ -199,16 +205,18 @@
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <Button
             android:id="@+id/activity_game_start_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/start_puzzle"
             android:background="@drawable/button_blue_background"
-            android:textColor="@color/fontColorBlack"/>
+            android:text="@string/start_puzzle"
+            android:textColor="@color/fontColorBlack" />
     </LinearLayout>
 </LinearLayout>
 

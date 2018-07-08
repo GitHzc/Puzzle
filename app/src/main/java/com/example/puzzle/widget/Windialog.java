@@ -1,20 +1,13 @@
 package com.example.puzzle.widget;
 
-/**
- * Created by Jiang太白 on 2018/7/4.
- */
-
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.puzzle.R;
-import com.example.puzzle.activity.MainPageActivity;
 
 
 public class Windialog extends Dialog implements android.view.View.OnClickListener {
@@ -26,7 +19,7 @@ public class Windialog extends Dialog implements android.view.View.OnClickListen
 
     private Windialog.LeaveMyDialogListener listener;
 
-    public interface LeaveMyDialogListener{
+    public interface LeaveMyDialogListener {
         void onClick(View view);
     }
 
@@ -37,7 +30,7 @@ public class Windialog extends Dialog implements android.view.View.OnClickListen
     }
 
     public Windialog(Context context, int theme, Windialog.LeaveMyDialogListener listener) {
-        super(context,theme);
+        super(context, theme);
         // TODO Auto-generated constructor stub
         this.context = context;
         this.listener = listener;

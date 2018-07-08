@@ -1,17 +1,14 @@
 package com.example.puzzle.activity;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -19,18 +16,9 @@ import android.widget.TextView;
 import com.example.puzzle.R;
 import com.example.puzzle.model.RankBean;
 import com.example.puzzle.utils.HttpUtils;
-import com.google.gson.reflect.TypeToken;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.zip.Inflater;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -64,16 +52,17 @@ public class Rank extends AppCompatActivity implements View.OnClickListener {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<RankBean>() {
                     @Override
-                    public void onSubscribe(Disposable d) { }
+                    public void onSubscribe(Disposable d) {
+                    }
 
                     @Override
                     public void onNext(RankBean rankBean) {
                         List<RankBean.ContentBean> contentBeans = rankBean.getContent();
                         int index = 0;
-                        for (RankBean.ContentBean contentBean: contentBeans){
-                            index ++;
+                        for (RankBean.ContentBean contentBean : contentBeans) {
+                            index++;
                             String name = contentBean.getUsername();
-                            String mode = contentBean.getMode()+"×"+contentBean.getMode();
+                            String mode = contentBean.getMode() + "×" + contentBean.getMode();
                             String score = ScoreToTime(contentBean.getScore());
                             rankItems.add(new RankItem(String.valueOf(index), name, mode, score));
                         }
@@ -82,16 +71,18 @@ public class Rank extends AppCompatActivity implements View.OnClickListener {
                     }
 
                     @Override
-                    public void onError(Throwable e) { }
+                    public void onError(Throwable e) {
+                    }
 
                     @Override
-                    public void onComplete() { }
+                    public void onComplete() {
+                    }
                 });
 
         difficulty.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0){
+                if (position == 0) {
                     Retrofit retrofit = HttpUtils.getRetrofit();
                     HttpUtils.Myapi api = retrofit.create(HttpUtils.Myapi.class);
                     api.getAllRecord()
@@ -99,7 +90,8 @@ public class Rank extends AppCompatActivity implements View.OnClickListener {
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new Observer<RankBean>() {
                                 @Override
-                                public void onSubscribe(Disposable d) { }
+                                public void onSubscribe(Disposable d) {
+                                }
 
                                 @Override
                                 public void onNext(RankBean rankBean) {
@@ -107,10 +99,10 @@ public class Rank extends AppCompatActivity implements View.OnClickListener {
                                     rankItems.clear();
                                     rankAdapter.notifyDataSetChanged();
                                     int index = 0;
-                                    for (RankBean.ContentBean contentBean: contentBeans){
-                                        index ++;
+                                    for (RankBean.ContentBean contentBean : contentBeans) {
+                                        index++;
                                         String name = contentBean.getUsername();
-                                        String mode = contentBean.getMode()+"×"+contentBean.getMode();
+                                        String mode = contentBean.getMode() + "×" + contentBean.getMode();
                                         String score = ScoreToTime(contentBean.getScore());
                                         rankItems.add(new RankItem(String.valueOf(index), name, mode, score));
                                     }
@@ -118,13 +110,15 @@ public class Rank extends AppCompatActivity implements View.OnClickListener {
                                 }
 
                                 @Override
-                                public void onError(Throwable e) { }
+                                public void onError(Throwable e) {
+                                }
 
                                 @Override
-                                public void onComplete() { }
+                                public void onComplete() {
+                                }
                             });
-                }else if(position == 1 || position == 2 || position == 3 || position == 4){
-                    String mode = position == 1 ? "3":(position == 2 ? "4":(position == 3 ? "5" : "6"));
+                } else if (position == 1 || position == 2 || position == 3 || position == 4) {
+                    String mode = position == 1 ? "3" : (position == 2 ? "4" : (position == 3 ? "5" : "6"));
                     Retrofit retrofit = HttpUtils.getRetrofit();
                     HttpUtils.Myapi api = retrofit.create(HttpUtils.Myapi.class);
                     api.getRecordWithMode(mode)
@@ -132,7 +126,8 @@ public class Rank extends AppCompatActivity implements View.OnClickListener {
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new Observer<RankBean>() {
                                 @Override
-                                public void onSubscribe(Disposable d) { }
+                                public void onSubscribe(Disposable d) {
+                                }
 
                                 @Override
                                 public void onNext(RankBean rankBean) {
@@ -141,10 +136,10 @@ public class Rank extends AppCompatActivity implements View.OnClickListener {
                                     rankAdapter.notifyDataSetChanged();
                                     int index = 0;
                                     if (contentBeans == null) return;
-                                    for (RankBean.ContentBean contentBean: contentBeans){
-                                        index ++;
+                                    for (RankBean.ContentBean contentBean : contentBeans) {
+                                        index++;
                                         String name = contentBean.getUsername();
-                                        String mode = contentBean.getMode()+"×"+contentBean.getMode();
+                                        String mode = contentBean.getMode() + "×" + contentBean.getMode();
                                         String score = ScoreToTime(contentBean.getScore());
                                         rankItems.add(new RankItem(String.valueOf(index), name, mode, score));
                                     }
@@ -152,31 +147,34 @@ public class Rank extends AppCompatActivity implements View.OnClickListener {
                                 }
 
                                 @Override
-                                public void onError(Throwable e) { }
+                                public void onError(Throwable e) {
+                                }
 
                                 @Override
-                                public void onComplete() { }
+                                public void onComplete() {
+                                }
                             });
-                }else{
+                } else {
                     return;
                 }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
     }
 
-    private String ScoreToTime(String score){
+    private String ScoreToTime(String score) {
         Integer scoreInt = Integer.parseInt(score);
-        String second = scoreInt % 60 < 10 ? "0" + String.valueOf(scoreInt % 60):String.valueOf(scoreInt % 60);
-        String minute = scoreInt / 60 < 10 ? "0" + String.valueOf(scoreInt / 60):String.valueOf(scoreInt / 60);
+        String second = scoreInt % 60 < 10 ? "0" + String.valueOf(scoreInt % 60) : String.valueOf(scoreInt % 60);
+        String minute = scoreInt / 60 < 10 ? "0" + String.valueOf(scoreInt / 60) : String.valueOf(scoreInt / 60);
         return minute + ":" + second;
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.rank_back:
                 Rank.this.finish();
                 break;
@@ -187,14 +185,13 @@ public class Rank extends AppCompatActivity implements View.OnClickListener {
 }
 
 
-
-class RankItem{
+class RankItem {
     private String rank;
     private String mode;
     private String username;
     private String score;
 
-    public RankItem(String rank, String username, String mode, String score){
+    public RankItem(String rank, String username, String mode, String score) {
         this.rank = rank;
         this.mode = mode;
         this.username = username;
@@ -204,12 +201,15 @@ class RankItem{
     public String getRank() {
         return rank;
     }
+
     public String getMode() {
         return mode;
     }
+
     public String getScore() {
         return score;
     }
+
     public String getUsername() {
         return username;
     }
@@ -217,18 +217,21 @@ class RankItem{
     public void setMode(String mode) {
         this.mode = mode;
     }
+
     public void setRank(String rank) {
         this.rank = rank;
     }
+
     public void setScore(String score) {
         this.score = score;
     }
+
     public void setUsername(String username) {
         this.username = username;
     }
 }
 
-class ViewHolder{
+class ViewHolder {
     TextView rank_rank, rank_name, rank_type, rank_score;
 }
 
@@ -236,7 +239,7 @@ class RankAdapter extends BaseAdapter {
     List<RankItem> list;
     LayoutInflater inflater;
 
-    public RankAdapter(Context context,List<RankItem> list){
+    public RankAdapter(Context context, List<RankItem> list) {
         this.list = list;
         inflater = LayoutInflater.from(context);
     }
@@ -263,21 +266,24 @@ class RankAdapter extends BaseAdapter {
         // TODO Auto-generated method stub
         return position;
     }
-    public void update(int index, ListView listview){
+
+    public void update(int index, ListView listview) {
         //得到第一个可见item项的位置
         int visiblePosition = listview.getFirstVisiblePosition();
         //得到指定位置的视图，对listview的缓存机制不清楚的可以去了解下
         View view = listview.getChildAt(index - visiblePosition);
         ViewHolder holder = (ViewHolder) view.getTag();
-        setData(holder,index);
+        setData(holder, index);
     }
-    private void setData(ViewHolder holder,int index){
+
+    private void setData(ViewHolder holder, int index) {
         RankItem rankItem = list.get(index);
         holder.rank_rank.setText(rankItem.getRank());
         holder.rank_name.setText(rankItem.getUsername());
         holder.rank_type.setText(rankItem.getMode());
         holder.rank_score.setText(rankItem.getScore());
     }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub
@@ -285,9 +291,9 @@ class RankAdapter extends BaseAdapter {
         int itemType = this.getItemViewType(position);
 
         //强制重绘所有Item
-        if (itemType == 1){
+        if (itemType == 1) {
             convertView = inflater.inflate(R.layout.rank_item_orange, null);
-        }else{
+        } else {
             convertView = inflater.inflate(R.layout.rank_item_white, null);
         }
         viewHolder = new ViewHolder();

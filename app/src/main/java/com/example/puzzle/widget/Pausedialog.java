@@ -1,15 +1,10 @@
 package com.example.puzzle.widget;
 
-/**
- * Created by Jiang太白 on 2018/7/4.
- */
-
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.puzzle.R;
@@ -24,7 +19,7 @@ public class Pausedialog extends Dialog implements android.view.View.OnClickList
     private Button goon;
     private Pausedialog.LeaveMyDialogListener listener;
 
-    public interface LeaveMyDialogListener{
+    public interface LeaveMyDialogListener {
         void onClick(View view);
     }
 
@@ -35,7 +30,7 @@ public class Pausedialog extends Dialog implements android.view.View.OnClickList
     }
 
     public Pausedialog(Context context, int theme, Pausedialog.LeaveMyDialogListener listener) {
-        super(context,theme);
+        super(context, theme);
         // TODO Auto-generated constructor stub
         this.context = context;
         this.listener = listener;

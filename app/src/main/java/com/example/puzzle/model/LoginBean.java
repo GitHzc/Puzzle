@@ -3,10 +3,6 @@ package com.example.puzzle.model;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by Administrator on 2018/7/2 0002.
- */
-
 public class LoginBean {
 
     /**

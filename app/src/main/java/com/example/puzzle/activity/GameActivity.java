@@ -102,8 +102,8 @@ public class GameActivity extends BaseActivity {
     private Windialog dialogwin;
     private Pausedialog dialogpause;
 
-    private Map<String,String> mapright = new HashMap<String, String>();
-    private Map<String,String> mapleft = new HashMap<String, String>();
+    private Map<String, String> mapright = new HashMap<String, String>();
+    private Map<String, String> mapleft = new HashMap<String, String>();
     private int left = 0;
     private int right = 0;
     private int rl = 1;
@@ -186,8 +186,8 @@ public class GameActivity extends BaseActivity {
         });
     }
 
-    private void yuantutu(){
-        dialogBuilder =  new AlertDialog.Builder(mContext,R.style.dialog);
+    private void yuantutu() {
+        dialogBuilder = new AlertDialog.Builder(mContext, R.style.dialog);
         alertDialog = dialogBuilder
                 .setView(R.layout.yuantu)
                 .create();
@@ -205,17 +205,17 @@ public class GameActivity extends BaseActivity {
 
         String curTimeString = String.format("%02d:%02d", curminute, cursecond);
         timeText.setText(curTimeString);
-        
-        if(st == 1){
-            while(!stack.empty()){
-                ImageView v = findViewById((int)stack.pop());
-                Matrix matrix=new Matrix();
-                matrix.postRotate((float) 90,v.getWidth()/2,v.getHeight()/2);
+
+        if (st == 1) {
+            while (!stack.empty()) {
+                ImageView v = findViewById((int) stack.pop());
+                Matrix matrix = new Matrix();
+                matrix.postRotate((float) 90, v.getWidth() / 2, v.getHeight() / 2);
                 v.setImageMatrix(matrix);
             }
             st = 2;
         }
-        if(st == 0)st = 1;
+        if (st == 0) st = 1;
     }
 
     @Override
@@ -243,7 +243,7 @@ public class GameActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-        if(mBitmap != null && !mBitmap.isRecycled()){
+        if (mBitmap != null && !mBitmap.isRecycled()) {
             mBitmap.recycle();
         }
 
@@ -257,7 +257,7 @@ public class GameActivity extends BaseActivity {
             IPL = null;
         }
 
-        if(gameTimer != null){
+        if (gameTimer != null) {
             gameTimer.recycle();
             gameTimer = null;
         }
@@ -289,11 +289,11 @@ public class GameActivity extends BaseActivity {
     private void showSuccess() {
         gameview.setVisibility(View.GONE);
         pa.setImageResource(R.drawable.star);
-        dialogwin = new Windialog(mContext,R.style.dialog,
+        dialogwin = new Windialog(mContext, R.style.dialog,
                 new Windialog.LeaveMyDialogListener() {
                     @Override
                     public void onClick(View view) {
-                        switch(view.getId()){
+                        switch (view.getId()) {
                             case R.id.returnButton:
                                 Intent intent = MainPageActivity.getIntent(GameActivity.this);
                                 startActivity(intent);
@@ -345,8 +345,7 @@ public class GameActivity extends BaseActivity {
 
         try {
 
-            // TODO: 2016/4/27 裁剪算法优化基本完成，尚有几像素的偏差，可能是int到float强制转换的精度损失
-            //IPL = ImageSplitter.split(mBitmap, PuzzleApplication.getLevel(), DISH_WIDTH, DISH_HEIGHT);
+            // 裁剪算法优化基本完成，尚有几像素的偏差，可能是int到float强制转换的精度损失
             int dishWidth = DensityUtil.dip2px(PuzzleApplication.getAppContext(), DISH_WIDTH);
             int dishHeight = DensityUtil.dip2px(PuzzleApplication.getAppContext(), DISH_HEIGHT);
             Bitmap tempBitmap = BitmapUtils.createNoRecycleScaleBitmap(
@@ -379,8 +378,8 @@ public class GameActivity extends BaseActivity {
                     imageView.setIndex(j + i * mLevel);
 
                     int id = View.generateViewId();
-                    mapright.put(String.valueOf(id),"0");
-                    mapleft.put(String.valueOf(id),"0");
+                    mapright.put(String.valueOf(id), "0");
+                    mapleft.put(String.valueOf(id), "0");
 
                     imageView.setId(id);
 
@@ -398,36 +397,33 @@ public class GameActivity extends BaseActivity {
                         public void onClick(View view) {
                             int id = view.getId();
                             ImageView imageView = findViewById(id);
-                            Matrix matrix= view.getMatrix();
+                            Matrix matrix = view.getMatrix();
 
                             int cright = Integer.valueOf(mapright.get(String.valueOf(id))).intValue();
                             int cleft = Integer.valueOf(mapleft.get(String.valueOf(id))).intValue();
-                            if(right == 1){
+                            if (right == 1) {
                                 cright = cright + 1;
                             }
-                            if(left == 1){
+                            if (left == 1) {
                                 cleft = cleft + 1;
                             }
-                            if(rl == 1){
+                            if (rl == 1) {
                                 cright = 0;
                                 cleft = 0;
                             }
 
-                            matrix.setRotate( 90+ 90 * cright - 90 * cleft,view.getWidth()/2,view.getHeight()/2);
-                            mapright.put(String.valueOf(view.getId()),String.valueOf(cright));
-                            mapleft.put(String.valueOf(view.getId()),String.valueOf(cleft));
+                            matrix.setRotate(90 + 90 * cright - 90 * cleft, view.getWidth() / 2, view.getHeight() / 2);
+                            mapright.put(String.valueOf(view.getId()), String.valueOf(cright));
+                            mapleft.put(String.valueOf(view.getId()), String.valueOf(cleft));
                             imageView.setImageMatrix(matrix);
                         }
 
-                        });
+                    });
                     layViewContainer.addView(pieceList.get(aList), layoutParams);
                     stack.push(pieceList.get(aList).getId());
                 }
 
             }
-
-
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -435,12 +431,10 @@ public class GameActivity extends BaseActivity {
         Log.d(TAG, "init finish");
     }
 
-
-
-    public void rotate(ImageView v){
-        Matrix matrix=new Matrix();
+    public void rotate(ImageView v) {
+        Matrix matrix = new Matrix();
         v.setScaleType(ImageView.ScaleType.MATRIX);   //required
-        matrix.postRotate((float) 90,75,75);
+        matrix.postRotate((float) 90, 75, 75);
         v.setImageMatrix(matrix);
     }
 
@@ -458,13 +452,12 @@ public class GameActivity extends BaseActivity {
 
         private final WeakReference<Activity> mActivity;
 
-        public StaticHandler(Activity activity){
+        public StaticHandler(Activity activity) {
             mActivity = new WeakReference<Activity>(activity);
         }
 
-
         @Override
-        public void handleMessage(Message msg){
+        public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
                 case GameTimer.MESSAGE_TIMER:
@@ -478,11 +471,11 @@ public class GameActivity extends BaseActivity {
     private void pause() {
         gameTimer.stopTimer();
 
-        dialogpause = new Pausedialog(mContext,R.style.dialog,
+        dialogpause = new Pausedialog(mContext, R.style.dialog,
                 new Pausedialog.LeaveMyDialogListener() {
                     @Override
                     public void onClick(View view) {
-                        switch(view.getId()){
+                        switch (view.getId()) {
 
                             case R.id.goon:
                                 dialogpause.dismiss();

@@ -1,8 +1,6 @@
 package com.example.puzzle.dish;
 
 import android.content.Context;
-import android.graphics.Matrix;
-import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +13,6 @@ import butterknife.BindView;
 
 /**
  * puzzle
- * Created by ZQ on 2016/4/4.
  */
 public class DragImageView extends ImageView {
 
@@ -60,7 +57,7 @@ public class DragImageView extends ImageView {
         mIndex = index;
     }
 
-    public int getIndex(){
+    public int getIndex() {
         return mIndex;
     }
 }

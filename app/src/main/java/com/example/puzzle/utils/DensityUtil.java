@@ -2,10 +2,6 @@ package com.example.puzzle.utils;
 
 import android.content.Context;
 
-/**
- * puzzle
- * Created by ZQ on 2016/4/4.
- */
 public class DensityUtil {
 
     /**
@@ -24,7 +20,7 @@ public class DensityUtil {
         return (int) (pxValue / scale + 0.5f);
     }
 
-    public static float getScale(Context context){
+    public static float getScale(Context context) {
         return context.getResources().getDisplayMetrics().density;
     }
 }

@@ -4,16 +4,11 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.example.puzzle.R;
-
-/**
- * Created by Administrator on 2018/7/3 0003.
- */
 
 public class ChooseBorderView extends View {
     private int scale = (int) this.getResources().getDisplayMetrics().density;
@@ -50,7 +45,7 @@ public class ChooseBorderView extends View {
         super.onLayout(changed, left, top, right, bottom);
         borderHeight = this.getHeight();
         borderWidth = this.getWidth();
-        four_corner_coordinate_positions = new float[][] {
+        four_corner_coordinate_positions = new float[][]{
                 {(borderWidth - borderLength) / 2, (borderHeight - borderLength) / 2},
                 {(borderWidth + borderLength) / 2, (borderHeight - borderLength) / 2},
                 {(borderWidth - borderLength) / 2, (borderHeight + borderLength) / 2},
@@ -170,7 +165,7 @@ public class ChooseBorderView extends View {
         int x = (int) event.getX();
         int y = (int) event.getY();
 
-        switch(event.getAction()) {
+        switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 IF_SCANNING_SHOW = true;
                 if (isInTheCornerCircle(event.getX(), event.getY()) != -1) {
@@ -241,7 +236,7 @@ public class ChooseBorderView extends View {
     }
 
     private void judgementXandY() {
-        switch(point) {
+        switch (point) {
             case 0:
                 if ((offsetX <= 0 && offsetY <= 0) || (offsetX <= 0 && offsetY >= 0)) {
                     POINT_STATE = 0; //扩大
@@ -284,7 +279,7 @@ public class ChooseBorderView extends View {
                 offsetY = 0;
             }
         } else {
-            switch(point) {
+            switch (point) {
                 case 0:
                     if ((four_corner_coordinate_positions[0][0] - max <= 0) || (four_corner_coordinate_positions[0][1] - max <= 0)) {
                         max = 0;

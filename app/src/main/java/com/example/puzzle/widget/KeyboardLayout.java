@@ -7,14 +7,9 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-/**
- * Created by Administrator on 2018/7/2 0002.
- */
-
-public class KeyboardLayout extends LinearLayout{
+public class KeyboardLayout extends LinearLayout {
     private KeyboardLayoutListener mListener;
     private boolean mIsKeyboardActive = false;
     private int mKeyboardHeight = 0;

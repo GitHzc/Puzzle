@@ -1,9 +1,5 @@
 package com.example.puzzle.model;
 
-/**
- * Created by Administrator on 2018/7/6 0006.
- */
-
 public class User {
     String username;
     String password;

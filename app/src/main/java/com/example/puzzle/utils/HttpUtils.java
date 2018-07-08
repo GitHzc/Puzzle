@@ -1,6 +1,5 @@
 package com.example.puzzle.utils;
 
-import com.example.puzzle.PuzzleApplication;
 import com.example.puzzle.model.HistoryBean;
 import com.example.puzzle.model.LoginBean;
 import com.example.puzzle.model.LogoutBean;
@@ -28,40 +27,38 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 import retrofit2.http.Url;
 
-/**
- * Created by Administrator on 2018/7/2 0002.
- */
-
 public class HttpUtils {
     public interface Myapi {
         @FormUrlEncoded
         @POST("user")
         @Headers("Content-Type:application/x-www-form-urlencoded")
-        Observable<Response<LoginBean>> login(@Field("username")String username, @Field("passwd")String password, @Field("action")String action);
+        Observable<Response<LoginBean>> login(@Field("username") String username, @Field("passwd") String password, @Field("action") String action);
 
         @FormUrlEncoded
         @POST("user")
         @Headers("Content-Type:application/x-www-form-urlencoded")
-        Observable<LoginBean> register(@Field("username")String username, @Field("passwd")String password, @Field("action")String action);
+        Observable<LoginBean> register(@Field("username") String username, @Field("passwd") String password, @Field("action") String action);
 
         @FormUrlEncoded
         @POST("user")
         @Headers("Content-Type:application/x-www-form-urlencoded")
-        Observable<LogoutBean> logout(@Field("action")String action);
+        Observable<LogoutBean> logout(@Field("action") String action);
 
-        @GET("record") //请求所有战绩
+        @GET("record")
+            //请求所有战绩
         Observable<RankBean> getAllRecord();
 
         @GET("record") //请求Mode对应战绩
         @Headers("Content-Type:application/x-www-form-urlencoded")
-        Observable<RankBean> getRecordWithMode(@Query("mode")String mode);
+        Observable<RankBean> getRecordWithMode(@Query("mode") String mode);
 
-        @GET("user/record") //请求用户所有历史战绩
+        @GET("user/record")
+            //请求用户所有历史战绩
         Observable<HistoryBean> getAllHistory(@Header("Cookie") String cookie);
 
         @GET("user/record") //请求用户Mode对应战绩
         @Headers("Content-Type:application/x-www-form-urlencoded")
-        Observable<HistoryBean> getHistoryWithMode(@Header("Cookie") String cookie, @Query("mode")String mode);
+        Observable<HistoryBean> getHistoryWithMode(@Header("Cookie") String cookie, @Query("mode") String mode);
 
         @GET("user/info") //获取用户信息 rank username
         @Headers("Content-Type:application/x-www-form-urlencoded")
@@ -70,7 +67,7 @@ public class HttpUtils {
         @POST("record")
         @FormUrlEncoded
         @Headers("Content-Type:application/x-www-form-urlencoded")
-        Observable<SubmitScoreBean> submit(@Header("Cookie")String cookie, @Field("score")int score, @Field("time")String time, @Field("mode")int level);
+        Observable<SubmitScoreBean> submit(@Header("Cookie") String cookie, @Field("score") int score, @Field("time") String time, @Field("mode") int level);
 
         @GET("photo")
         Observable<PhotoBean> getPictureUrl();

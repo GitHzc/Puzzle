@@ -1,9 +1,5 @@
 package com.example.puzzle.imagesplit;
 
-/**
- * Created by Administrator on 2016/3/27.
- */
-
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
@@ -36,30 +32,27 @@ public class ImageSplitter {
         Log.d(TAG, "circle begin");
         for (int i = 0; i < level; i++) {
             for (int j = 0; j < level; j++) {
-                if(i == 0) {
+                if (i == 0) {
                     if (j == 0) {
                         k = DishManager.COVER_TOP_LEFT;
-                    } else if(j == level - 1) {
+                    } else if (j == level - 1) {
                         k = DishManager.COVER_TOP_RIGHT;
-                    }
-                    else  {
+                    } else {
                         k = DishManager.COVER_TOP;
                     }
-                }
-                else if(i == level - 1) {
-                    if(j == 0) {
+                } else if (i == level - 1) {
+                    if (j == 0) {
                         k = DishManager.COVER_BOTTOM_LEFT;
                     } else if (j == level - 1) {
                         k = DishManager.COVER_BOTTOM_RIGHT;
-                    } else{
+                    } else {
                         k = DishManager.COVER_BOTTOM;
                     }
-                }
-                else if(j == 0) {
+                } else if (j == 0) {
                     k = DishManager.COVER_LEFT;
-                }else if(j == level - 1) {
+                } else if (j == level - 1) {
                     k = DishManager.COVER_RIGHT;
-                }else  {
+                } else {
                     k = DishManager.COVER_CENTER;
                 }
 
@@ -69,20 +62,18 @@ public class ImageSplitter {
                 piece.index = j + i * level;
                 float xValue, yValue;
 
-                if(j != 0) {
+                if (j != 0) {
                     //xValue = (int) (j * (pieceWidth - pieceWidth * 0.25));
                     xValue = (int) (j * pieceWidth - pieceWidth * 0.25);
-                }
-                else {
+                } else {
                     xValue = j * pieceWidth;
                 }
-                if(i != 0) {
+                if (i != 0) {
                     yValue = i * pieceHeight;
-                    if(i != level - 1){
+                    if (i != level - 1) {
                         yValue += 0.25f * pieceHeight;
                     }
-                }
-                else {
+                } else {
                     yValue = i * pieceHeight;
                 }
 
@@ -100,10 +91,10 @@ public class ImageSplitter {
 
                 float width = pieceWidth;
                 float height = pieceHeight;
-                if(i != level - 1){
+                if (i != level - 1) {
                     height += pieceHeight * 0.25f;
                 }
-                if(j != 0){
+                if (j != 0) {
                     width += pieceWidth * 0.25f;
                 }
 

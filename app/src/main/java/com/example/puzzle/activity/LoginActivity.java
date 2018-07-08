@@ -5,13 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,10 +18,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.puzzle.PuzzleApplication;
 import com.example.puzzle.R;
+import com.example.puzzle.model.LoginBean;
+import com.example.puzzle.model.User;
+import com.example.puzzle.utils.HttpUtils;
+import com.example.puzzle.utils.Utility;
+import com.example.puzzle.widget.KeyboardLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,19 +33,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import com.example.puzzle.model.User;
-import com.example.puzzle.utils.HttpUtils;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import com.example.puzzle.model.LoginBean;
-
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import com.example.puzzle.utils.Utility;
-import com.example.puzzle.widget.KeyboardLayout;
 
 import static com.example.puzzle.utils.Utility.REQUEST_PERMISSION_CODE;
 
@@ -98,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onButtonClick(View view) {
         String username = mUsername.getText().toString();
         String password = mPassword.getText().toString();
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.close_button:
                 mLinearLayout.setVisibility(View.GONE);
                 break;
@@ -128,7 +124,8 @@ public class LoginActivity extends AppCompatActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<LoginBean>>() {
                     @Override
-                    public void onSubscribe(Disposable d) {}
+                    public void onSubscribe(Disposable d) {
+                    }
 
                     @Override
                     public void onNext(Response<LoginBean> response) {
@@ -145,10 +142,12 @@ public class LoginActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onError(Throwable e) {}
+                    public void onError(Throwable e) {
+                    }
 
                     @Override
-                    public void onComplete() {}
+                    public void onComplete() {
+                    }
                 });
     }
 
@@ -160,7 +159,8 @@ public class LoginActivity extends AppCompatActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<LoginBean>() {
                     @Override
-                    public void onSubscribe(Disposable d) {}
+                    public void onSubscribe(Disposable d) {
+                    }
 
                     @Override
                     public void onNext(LoginBean loginBean) {
@@ -174,15 +174,17 @@ public class LoginActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onError(Throwable e) {}
+                    public void onError(Throwable e) {
+                    }
 
                     @Override
-                    public void onComplete() {}
+                    public void onComplete() {
+                    }
                 });
     }
 
     private void getPermission() {
-        String[] permissions = new String[] {
+        String[] permissions = new String[]{
                 Manifest.permission.INTERNET,
                 Manifest.permission.READ_EXTERNAL_STORAGE,
         };

@@ -1,8 +1,8 @@
 package com.example.puzzle.activity;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.example.puzzle.PuzzleApplication;
 import com.example.puzzle.R;
 import com.example.puzzle.model.HistoryBean;
-import com.example.puzzle.model.RankBean;
 import com.example.puzzle.utils.HttpUtils;
 
 import java.util.ArrayList;
@@ -53,16 +52,17 @@ public class History extends AppCompatActivity implements View.OnClickListener {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<HistoryBean>() {
                     @Override
-                    public void onSubscribe(Disposable d) { }
+                    public void onSubscribe(Disposable d) {
+                    }
 
                     @Override
                     public void onNext(HistoryBean historyBean) {
                         List<HistoryBean.ContentBean> contentBeans = historyBean.getContent();
                         int index = 0;
                         if (contentBeans == null) return;
-                        for (HistoryBean.ContentBean contentBean: contentBeans){
-                            index ++;
-                            String mode = contentBean.getMode() + "×" +  contentBean.getMode();
+                        for (HistoryBean.ContentBean contentBean : contentBeans) {
+                            index++;
+                            String mode = contentBean.getMode() + "×" + contentBean.getMode();
                             String date = contentBean.getTime();
                             String score = ScoreToTime(contentBean.getScore());
                             historyItems.add(new HistoryItem(mode, date, score));
@@ -72,17 +72,19 @@ public class History extends AppCompatActivity implements View.OnClickListener {
                     }
 
                     @Override
-                    public void onError(Throwable e) { }
+                    public void onError(Throwable e) {
+                    }
 
                     @Override
-                    public void onComplete() { }
+                    public void onComplete() {
+                    }
                 });
 
         //Spinner监听
-        difficulty.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+        difficulty.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id){
-                if (position == 0){
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) {
                     Retrofit retrofit = HttpUtils.getRetrofit();
                     HttpUtils.Myapi api = retrofit.create(HttpUtils.Myapi.class);
                     api.getAllHistory(PuzzleApplication.getmUser().getCookie())
@@ -90,7 +92,8 @@ public class History extends AppCompatActivity implements View.OnClickListener {
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new Observer<HistoryBean>() {
                                 @Override
-                                public void onSubscribe(Disposable d) { }
+                                public void onSubscribe(Disposable d) {
+                                }
 
                                 @Override
                                 public void onNext(HistoryBean historyBean) {
@@ -99,9 +102,9 @@ public class History extends AppCompatActivity implements View.OnClickListener {
                                     historyList.setAdapter(historyAdapter);
                                     if (contentBeans == null) return;
                                     int index = 0;
-                                    for (HistoryBean.ContentBean contentBean: contentBeans){
-                                        index ++;
-                                        String mode = contentBean.getMode() + "×" +  contentBean.getMode();
+                                    for (HistoryBean.ContentBean contentBean : contentBeans) {
+                                        index++;
+                                        String mode = contentBean.getMode() + "×" + contentBean.getMode();
                                         String date = contentBean.getTime();
                                         String score = ScoreToTime(contentBean.getScore());
                                         historyItems.add(new HistoryItem(mode, date, score));
@@ -111,13 +114,15 @@ public class History extends AppCompatActivity implements View.OnClickListener {
                                 }
 
                                 @Override
-                                public void onError(Throwable e) { }
+                                public void onError(Throwable e) {
+                                }
 
                                 @Override
-                                public void onComplete() { }
+                                public void onComplete() {
+                                }
                             });
-                }else if (position == 1 || position == 2 || position == 3 || position == 4){
-                    String mode = position == 1 ? "3":(position == 2 ? "4":(position == 3 ? "5" : "6"));
+                } else if (position == 1 || position == 2 || position == 3 || position == 4) {
+                    String mode = position == 1 ? "3" : (position == 2 ? "4" : (position == 3 ? "5" : "6"));
                     Retrofit retrofit = HttpUtils.getRetrofit();
                     HttpUtils.Myapi api = retrofit.create(HttpUtils.Myapi.class);
                     api.getHistoryWithMode(PuzzleApplication.getmUser().getCookie(), mode)
@@ -125,7 +130,8 @@ public class History extends AppCompatActivity implements View.OnClickListener {
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new Observer<HistoryBean>() {
                                 @Override
-                                public void onSubscribe(Disposable d) { }
+                                public void onSubscribe(Disposable d) {
+                                }
 
                                 @Override
                                 public void onNext(HistoryBean historyBean) {
@@ -134,9 +140,9 @@ public class History extends AppCompatActivity implements View.OnClickListener {
                                     historyList.setAdapter(historyAdapter);
                                     if (contentBeans == null) return;
                                     int index = 0;
-                                    for (HistoryBean.ContentBean contentBean: contentBeans){
-                                        index ++;
-                                        String mode = contentBean.getMode() + "×" +  contentBean.getMode();
+                                    for (HistoryBean.ContentBean contentBean : contentBeans) {
+                                        index++;
+                                        String mode = contentBean.getMode() + "×" + contentBean.getMode();
                                         String date = contentBean.getTime();
                                         String score = ScoreToTime(contentBean.getScore());
                                         historyItems.add(new HistoryItem(mode, date, score));
@@ -146,30 +152,33 @@ public class History extends AppCompatActivity implements View.OnClickListener {
                                 }
 
                                 @Override
-                                public void onError(Throwable e) { }
+                                public void onError(Throwable e) {
+                                }
 
                                 @Override
-                                public void onComplete() { }
+                                public void onComplete() {
+                                }
                             });
                 }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
     }
 
-    private String ScoreToTime(String score){
+    private String ScoreToTime(String score) {
         Integer scoreInt = Integer.parseInt(score);
-        String second = scoreInt % 60 < 10 ? "0" + String.valueOf(scoreInt % 60):String.valueOf(scoreInt % 60);
-        String minute = scoreInt / 60 < 10 ? "0" + String.valueOf(scoreInt / 60):String.valueOf(scoreInt / 60);
+        String second = scoreInt % 60 < 10 ? "0" + String.valueOf(scoreInt % 60) : String.valueOf(scoreInt % 60);
+        String minute = scoreInt / 60 < 10 ? "0" + String.valueOf(scoreInt / 60) : String.valueOf(scoreInt / 60);
         return minute + ":" + second;
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.history_back:
                 History.this.finish();
             default:
@@ -178,12 +187,12 @@ public class History extends AppCompatActivity implements View.OnClickListener {
     }
 }
 
-class HistoryItem{
+class HistoryItem {
     String type;
     String date;
     String score;
 
-    public HistoryItem(String type, String date, String score){
+    public HistoryItem(String type, String date, String score) {
         this.type = type;
         this.date = date;
         this.score = score;
@@ -214,7 +223,7 @@ class HistoryItem{
     }
 }
 
-class HisrotyViewHolder{
+class HisrotyViewHolder {
     TextView his_type, his_date, his_score;
 }
 
@@ -222,7 +231,7 @@ class HistoryAdapter extends BaseAdapter {
     List<HistoryItem> list;
     LayoutInflater inflater;
 
-    public HistoryAdapter(Context context, List<HistoryItem> list){
+    public HistoryAdapter(Context context, List<HistoryItem> list) {
         this.list = list;
         inflater = LayoutInflater.from(context);
     }
@@ -244,26 +253,29 @@ class HistoryAdapter extends BaseAdapter {
         // TODO Auto-generated method stub
         return position;
     }
-    public void update(int index, ListView listview){
+
+    public void update(int index, ListView listview) {
         //得到第一个可见item项的位置
         int visiblePosition = listview.getFirstVisiblePosition();
         //得到指定位置的视图，对listview的缓存机制不清楚的可以去了解下
         View view = listview.getChildAt(index - visiblePosition);
         HisrotyViewHolder holder = (HisrotyViewHolder) view.getTag();
-        setData(holder,index);
+        setData(holder, index);
     }
-    private void setData(HisrotyViewHolder holder,int index){
+
+    private void setData(HisrotyViewHolder holder, int index) {
         HistoryItem historyItem = list.get(index);
         holder.his_type.setText(historyItem.getType());
         holder.his_date.setText(historyItem.getDate());
         holder.his_score.setText(historyItem.getScore());
 
     }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub
         HisrotyViewHolder viewHolder;
-        if(convertView==null){
+        if (convertView == null) {
             convertView = inflater.inflate(R.layout.history_item, null);
             viewHolder = new HisrotyViewHolder();
             viewHolder.his_type = convertView.findViewById(R.id.his_type);
@@ -271,7 +283,7 @@ class HistoryAdapter extends BaseAdapter {
             viewHolder.his_score = convertView.findViewById(R.id.his_score);
             convertView.setTag(viewHolder);
 
-        }else{
+        } else {
             viewHolder = (HisrotyViewHolder) convertView.getTag();
         }
         viewHolder.his_type.setText(list.get(position).getType());

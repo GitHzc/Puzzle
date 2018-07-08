@@ -23,9 +23,8 @@ import org.greenrobot.eventbus.EventBus;
 /**
  * puzzle
  * 拼盘管理类，用于更新拼盘的显示
- * Created by ZQ on 2016/4/3.
  */
-public class DishManager{
+public class DishManager {
 
     private static final String TAG = "puzzle";
 
@@ -67,12 +66,12 @@ public class DishManager{
 
     private boolean firstDrag;
 
-    public DishManager(int level){
+    public DishManager(int level) {
         mLevel = level;
         mSize = level * level;
         mLeftSize = mSize;
         mIndex = new boolean[mSize];
-        for(int i = 0; i < mSize; i++) mIndex[i] = false;
+        for (int i = 0; i < mSize; i++) mIndex[i] = false;
 
         p = new Paint();
         p.setColor(Color.RED);
@@ -86,18 +85,18 @@ public class DishManager{
         pOver.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OVER));
         pOver.setAntiAlias(true);
         pOver.setColor(Color.RED);
-        
+
         initMask();
     }
 
     /**
      * 游戏结束后调用，释放资源
      */
-    public void recycle(){
-        if(mImageView != null) {
+    public void recycle() {
+        if (mImageView != null) {
             mImageView = null;
         }
-        if(mBitmap != null && !mBitmap.isRecycled()){
+        if (mBitmap != null && !mBitmap.isRecycled()) {
             mBitmap.recycle();
         }
 
@@ -105,21 +104,22 @@ public class DishManager{
 
     /**
      * 初始化新游戏
-     * @param bitmap 新游戏图片
+     *
+     * @param bitmap    新游戏图片
      * @param imageView 新游戏的拼盘
      */
-    public void initNewGame(Bitmap bitmap, ImageView imageView){
+    public void initNewGame(Bitmap bitmap, ImageView imageView) {
         firstDrag = true;
-        if(bitmap == null || imageView == null) return;
+        if (bitmap == null || imageView == null) return;
 
-        if(mBitmap != null && !mBitmap.isRecycled()){
+        if (mBitmap != null && !mBitmap.isRecycled()) {
             mBitmap.recycle();
         }
 
         mImageView = imageView;
         mBitmap = bitmap;
         mLeftSize = mSize;
-        for(int i = 0; i < mIndex.length; i++){
+        for (int i = 0; i < mIndex.length; i++) {
             mIndex[i] = false;
         }
 
@@ -134,7 +134,7 @@ public class DishManager{
                 int y = (int) event.getY();
                 int index = (int) event.getLocalState();
 
-                switch (event.getAction()){
+                switch (event.getAction()) {
                     case DragEvent.ACTION_DRAG_STARTED:
 
                         break;
@@ -149,7 +149,7 @@ public class DishManager{
                         break;
                     case DragEvent.ACTION_DROP:
 
-                        if(judgeDrag(index, x, y)){
+                        if (judgeDrag(index, x, y)) {
                             updatePiece(index);
                         }
 
@@ -165,23 +165,23 @@ public class DishManager{
         refreshDish();
     }
 
-    public void setBitmap(Bitmap bitmap){
+    public void setBitmap(Bitmap bitmap) {
         mBitmap = bitmap;
     }
 
-    public void setLevel(int level){
+    public void setLevel(int level) {
         mLevel = level;
     }
 
-    public static Bitmap getCover(int index){
+    public static Bitmap getCover(int index) {
         Bitmap bitmap = Bitmap.createBitmap(
-                    (int) width,
-                    (int) height,
-                    Bitmap.Config.ARGB_8888);
+                (int) width,
+                (int) height,
+                Bitmap.Config.ARGB_8888);
 
         Canvas canvas = new Canvas(bitmap);
 
-        switch (index){
+        switch (index) {
             case COVER_TOP_LEFT:
                 canvas.drawRect(0, 0, rectWidth, rectHeight, p);
                 canvas.drawArc(ovalRight, 0, 360, true, pOut);
@@ -240,22 +240,24 @@ public class DishManager{
 
     /**
      * 判断拼块是否被拖动到正确的位置
+     *
      * @param i 拼块下标
      * @param x 拖动事件x坐标
      * @param y 拖动事件y坐标
      * @return 判断结果
      */
-    public boolean judgeDrag(int i, int x, int y){
+    public boolean judgeDrag(int i, int x, int y) {
         RectF rect = getRectF(i);
         return rect.contains(x, y);
     }
 
     /**
      * 根据拼块下标计算拼块实际占据的方形大小
+     *
      * @param i 拼块下标
      * @return 拼块实际占据的方形大小
      */
-    private RectF getRectF(int i){
+    private RectF getRectF(int i) {
 
         return new RectF(
                 (i % mLevel) * rectWidth,
@@ -266,16 +268,17 @@ public class DishManager{
 
     /**
      * 当玩家将拼块移动到正确位置时调用，更新拼盘显示状态
+     *
      * @param i 正确的拼块下标
      */
-    public void updatePiece(int i){
-        if(i < 0 || i > mLevel * mLevel) return;
+    public void updatePiece(int i) {
+        if (i < 0 || i > mLevel * mLevel) return;
 
         mIndex[i] = true;
         refreshDish();
         EventBus.getDefault().post(new PieceMoveSuccessEvent(i));
         mLeftSize--;
-        if(mLeftSize == 0){
+        if (mLeftSize == 0) {
             EventBus.getDefault().post(new GameSuccessEvent());
         }
     }
@@ -283,7 +286,7 @@ public class DishManager{
     /**
      * 根据拼盘大小和游戏难度初始化基本遮罩拼块
      */
-    private void initMask(){
+    private void initMask() {
 
         rectWidth = DensityUtil.dip2px(PuzzleApplication.getAppContext(), (float) DISH_WIDTH / mLevel);
         rectHeight = DensityUtil.dip2px(PuzzleApplication.getAppContext(), (float) DISH_HEIGHT / mLevel);
@@ -295,21 +298,23 @@ public class DishManager{
         height = rectHeight + r;
 
         ovalLeft = new RectF(0, rectHeight / 2 - r, 2 * r, rectHeight / 2 + r);
-        ovalTop = new RectF(rectWidth / 2 - r, - r, rectWidth / 2 + r, r);
-        ovalTopRight = new RectF(rectWidth / 2, - r, rectWidth / 2 + 2 * r, r);
+        ovalTop = new RectF(rectWidth / 2 - r, -r, rectWidth / 2 + r, r);
+        ovalTopRight = new RectF(rectWidth / 2, -r, rectWidth / 2 + 2 * r, r);
         ovalRight = new RectF(rectWidth - r, rectHeight / 2 - r, rectWidth + r, rectHeight / 2 + r);
         ovalBottom = new RectF(rectWidth / 2 - r, rectHeight - r, rectWidth / 2 + r, rectHeight + r);
         ovalRightRight = new RectF(rectWidth, rectHeight / 2 - r, rectWidth + 2 * r, rectHeight / 2 + r);
         ovalBottomRight = new RectF(rectWidth / 2, rectHeight - r, rectWidth / 2 + 2 * r, rectHeight + r);
     }
+
     private static Paint p, pOut, pOver;
     private static RectF ovalLeft, ovalTop, ovalTopRight, ovalRight, ovalBottom, ovalRightRight, ovalBottomRight;
 
     /**
      * 根据当前游戏进度生成遮罩层
+     *
      * @return 遮罩层Bitmap
      */
-    private Bitmap getMask(){
+    private Bitmap getMask() {
         int width = DensityUtil.dip2px(PuzzleApplication.getAppContext(), (float) DISH_WIDTH);
         int height = DensityUtil.dip2px(PuzzleApplication.getAppContext(), (float) DISH_HEIGHT);
         Bitmap mask = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
@@ -319,28 +324,27 @@ public class DishManager{
         p.setAntiAlias(true);
         p.setColor(Color.RED);
 
-        for(int i = 0; i < mSize; i += mLevel){
-            for(int j = i; j < i + mLevel; j++){
-                if(!mIndex[j]) continue;
+        for (int i = 0; i < mSize; i += mLevel) {
+            for (int j = i; j < i + mLevel; j++) {
+                if (!mIndex[j]) continue;
 
                 Bitmap cover;
 
                 //最右一列
-                if((j + 1) % mLevel == 0) {
+                if ((j + 1) % mLevel == 0) {
                     //右上角
-                    if(j == mLevel - 1) {
+                    if (j == mLevel - 1) {
                         cover = getCover(COVER_TOP_RIGHT);
                         canvas.drawBitmap(cover, rectWidth * (mLevel - 1) - r, 0, p);
                     }
-                        //右下角
-                    else if (j == mSize - 1){
+                    //右下角
+                    else if (j == mSize - 1) {
                         cover = getCover(COVER_BOTTOM_RIGHT);
                         canvas.drawBitmap(
                                 cover,
                                 rectWidth * (mLevel - 1) - r,
                                 rectHeight * (mLevel - 1), p);
-                    }
-                    else{
+                    } else {
                         cover = getCover(COVER_RIGHT);
                         canvas.drawBitmap(cover,
                                 rectWidth * (mLevel - 1) - r,
@@ -349,21 +353,19 @@ public class DishManager{
 
                 }
                 //最左一列
-                else if(j % mLevel == 0) {
+                else if (j % mLevel == 0) {
                     //左上角
-                    if(j == 0){
+                    if (j == 0) {
                         cover = getCover(COVER_TOP_LEFT);
                         canvas.drawBitmap(cover, 0, 0, p);
                     }
                     //左下角
-                    if(j == mSize - mLevel + 1){
+                    if (j == mSize - mLevel + 1) {
                         cover = getCover(COVER_BOTTOM_LEFT);
                         canvas.drawBitmap(cover,
                                 0,
                                 rectHeight * (mLevel - 1), p);
-                    }
-
-                    else{
+                    } else {
                         cover = getCover(COVER_LEFT);
                         canvas.drawBitmap(cover,
                                 0,
@@ -371,21 +373,21 @@ public class DishManager{
                     }
                 }
                 //最上一行
-                else if(j < mLevel){
+                else if (j < mLevel) {
                     cover = getCover(COVER_TOP);
                     canvas.drawBitmap(cover,
                             rectWidth * j - r,
                             0, p);
                 }
                 //最下一行
-                else if(j > (mSize - mLevel)){
+                else if (j > (mSize - mLevel)) {
                     cover = getCover(COVER_BOTTOM);
                     canvas.drawBitmap(cover,
                             rectWidth * (j % mLevel) - r,
                             rectHeight * (mLevel - 1), p);
                 }
                 //中间
-                else{
+                else {
                     cover = getCover(COVER_CENTER);
                     canvas.drawBitmap(cover,
                             rectWidth * (j % mLevel) - r,
@@ -405,14 +407,15 @@ public class DishManager{
 
     private Bitmap output;
     private Bitmap mask;
+
     /**
      * 刷新拼盘显示
      * 首先获取遮罩层，然后将遮罩层与原始图片混合并显示
      */
-    private void refreshDish(){
-        if(mBitmap == null) return;
-        if(mask != null) mask.recycle();
-        if(output != null) output.recycle();
+    private void refreshDish() {
+        if (mBitmap == null) return;
+        if (mask != null) mask.recycle();
+        if (output != null) output.recycle();
         //获取遮罩层
         mask = getMask();
 

@@ -1,14 +1,7 @@
 package com.example.puzzle.utils;
 
-import android.Manifest;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
-
-import com.example.puzzle.activity.LoginActivity;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,14 +9,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.ResponseBody;
-
-/**
- * Created by Administrator on 2018/7/2 0002.
- */
 
 public class Utility {
     static public int REQUEST_PERMISSION_CODE = 1;

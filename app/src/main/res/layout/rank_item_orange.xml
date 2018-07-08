@@ -1,54 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rank"
     android:layout_width="match_parent"
     android:layout_height="30dp"
-    android:minHeight="35dp"
-    android:gravity="center_horizontal"
     android:layout_marginVertical="10dp"
-    android:background="@drawable/underline_blue">
+    android:background="@drawable/underline_blue"
+    android:gravity="center_horizontal"
+    android:minHeight="35dp">
+
     <TextView
         android:id="@+id/rank_rank"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
         android:text="1"
         android:textColor="#FD772E"
         android:textSize="17sp"
-        android:textStyle="bold"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"/>
+        android:textStyle="bold" />
+
     <TextView
         android:id="@+id/rank_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Username"
+        android:layout_alignParentBottom="true"
         android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/rank_rank"
+        android:text="Username"
         android:textColor="#FD772E"
         android:textSize="17sp"
-        android:textStyle="bold"
-        android:layout_toRightOf="@+id/rank_rank"
-        android:layout_alignParentBottom="true"/>
+        android:textStyle="bold" />
+
     <TextView
         android:id="@+id/rank_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Type"
+        android:layout_alignParentBottom="true"
         android:layout_marginRight="15dp"
+        android:layout_toLeftOf="@+id/rank_score"
+        android:text="Type"
         android:textColor="#FD772E"
         android:textSize="17sp"
-        android:textStyle="bold"
-        android:layout_toLeftOf="@+id/rank_score"
-        android:layout_alignParentBottom="true"/>
+        android:textStyle="bold" />
+
     <TextView
         android:id="@+id/rank_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
         android:text="Score"
         android:textColor="#FD772E"
         android:textSize="17sp"
-        android:textStyle="bold"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"/>
+        android:textStyle="bold" />
 </RelativeLayout>

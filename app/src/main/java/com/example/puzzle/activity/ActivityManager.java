@@ -8,7 +8,6 @@ import java.util.List;
 /**
  * The manager to manage activities
  * Puzzle
- * Created by ZQ on 2016/3/24.
  */
 public class ActivityManager {
 

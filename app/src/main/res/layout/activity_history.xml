@@ -1,76 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#191D29"
     android:orientation="vertical"
     tools:context=".activity.History">
+
     <LinearLayout
         android:id="@+id/back_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginVertical="15dp">
+
         <ImageButton
             android:id="@+id/history_back"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/back"
             android:background="#191D29"
-            android:padding="6dp"/>
+            android:padding="6dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/back" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginHorizontal="20dp"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:layout_marginHorizontal="20dp"
         android:paddingHorizontal="15dp">
+
         <TextView
             android:id="@+id/head"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:gravity="center_horizontal"
             android:paddingHorizontal="15dp"
-            android:layout_marginBottom="10dp"
             android:text="HISTORY"
+            android:textColor="#FFF"
             android:textSize="30dp"
-            android:textStyle="bold"
-            android:textColor="#FFF" />
+            android:textStyle="bold" />
+
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_margin="5dp"
-            android:paddingVertical="5dp"
             android:layout_marginBottom="30dp"
-            android:background="@drawable/underline_greenlight">
+            android:background="@drawable/underline_greenlight"
+            android:paddingVertical="5dp">
+
             <ImageView
                 android:id="@+id/rank_funnel"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:layout_alignParentBottom="true"
                 android:layout_marginHorizontal="15dp"
                 android:layout_marginVertical="0dp"
-                android:layout_alignParentBottom="true"
-                android:src="@drawable/funnel"/>
+                android:src="@drawable/funnel" />
+
             <Spinner
-                android:layout_toRightOf="@+id/rank_funnel"
                 android:id="@+id/history_difficulty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:entries="@array/difficulty_2">
-            </Spinner>
+                android:layout_toRightOf="@+id/rank_funnel"
+                android:entries="@array/difficulty_2"></Spinner>
         </RelativeLayout>
+
         <ListView
-            android:layout_marginVertical="10dp"
             android:id="@+id/history_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </ListView>
-
-
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"></ListView>
 
 
     </LinearLayout>

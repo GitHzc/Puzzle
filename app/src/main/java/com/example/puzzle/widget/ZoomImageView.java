@@ -7,10 +7,6 @@ import android.graphics.Matrix;
 import android.util.AttributeSet;
 import android.view.View;
 
-/**
- * Created by Administrator on 2018/7/3 0003.
- */
-
 public class ZoomImageView extends View {
     public static final int STATUS_INIT = 1;
     private Matrix matrix = new Matrix();
@@ -77,7 +73,7 @@ public class ZoomImageView extends View {
                     int distanceY = Math.abs(height - bitmapHeight);
                     if (distanceX >= distanceY) {
                         ratio = width / (bitmapWidth * 1.0f);
-                        matrix.postScale(ratio,  ratio);
+                        matrix.postScale(ratio, ratio);
                         translateY = (height - sourceBitmap.getHeight() * ratio) / 2f;
                         matrix.postTranslate(0, translateY);
                     } else {
@@ -91,7 +87,7 @@ public class ZoomImageView extends View {
                     matrix.postScale(ratio, ratio);
                     translateX = (width - (bitmapWidth * ratio)) / 2f;
                     matrix.postTranslate(translateX, 0);
-                } else if (bitmapWidth > width){
+                } else if (bitmapWidth > width) {
                     ratio = width / (bitmapWidth * 1.0f);
                     matrix.postScale(ratio, ratio);
                     translateY = (height - (bitmapHeight * ratio)) / 2f;
