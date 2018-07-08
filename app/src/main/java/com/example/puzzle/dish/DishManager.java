@@ -130,7 +130,6 @@ public class DishManager{
                     EventBus.getDefault().post(new DragStartEvent());
                     firstDrag = false;
                 }
-
                 int x = (int) event.getX();
                 int y = (int) event.getY();
                 int index = (int) event.getLocalState();

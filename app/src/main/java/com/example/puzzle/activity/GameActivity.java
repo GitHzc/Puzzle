@@ -4,10 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Matrix;
-import android.icu.text.AlphabeticIndex;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.TimeZone;
 import android.os.Bundle;
@@ -15,29 +12,22 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewStub;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.GridLayout;
-import android.widget.GridView;
-import android.widget.HorizontalScrollView;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.puzzle.PuzzleApplication;
 import com.example.puzzle.R;
-import com.example.puzzle.activity.BaseActivity;
 import com.example.puzzle.bgm.MusicServer;
 import com.example.puzzle.dish.DishManager;
 import com.example.puzzle.dish.DragImageView;
@@ -61,7 +51,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.ref.WeakReference;
 import java.util.Date;
@@ -72,7 +61,6 @@ import java.util.Stack;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
@@ -291,6 +279,11 @@ public class GameActivity extends BaseActivity {
         gameTimer.stopTimer();
         showSuccess();
 
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(DragStartEvent event) {
+        puzzleHint.setVisibility(View.GONE);
     }
 
     private void showSuccess() {
@@ -549,11 +542,6 @@ public class GameActivity extends BaseActivity {
                         }
                     }
                 });
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    void onDragStartEvent(DragStartEvent event) {
-        puzzleHint.setVisibility(View.GONE);
     }
 }
 
